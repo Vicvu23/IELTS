@@ -124,7 +124,7 @@ input[type="radio"] {
   bottom: 0;
   position: fixed;
   display: flex;
-  justify-content: center;
+   justify-content: space-between; 
   text-align: center;
   /* padding: 0 20px; */
 }
