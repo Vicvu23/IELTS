@@ -52,7 +52,7 @@
         const baseUrl = "";
         async function displayname(filename, index) {
            
-          const res = await fetch(`${baseUrl}/tests/${filename}`);
+          const res = await fetch(`${baseUrl}/public/tests/${filename}`);
           const test = await res.json();
           currentTest = test;
 
@@ -78,7 +78,7 @@
         const file = params.get('file');
 
         async function loadread(filename, index) { // kkhai báo hàm bất đồng bộ async để sử dụng await khi gọi API
-          const res = await fetch(`${baseUrl}/tests/${filename}`);
+          const res = await fetch(`${baseUrl}/public/tests/${filename}`);
           const test = await res.json();
           currentTest = test;
 
@@ -155,7 +155,7 @@
           async function loadTest(filename, index) {
              
             let questionIndex = index === 0 ? 1 : (index === 1 ? 14 : 27);
-            const res = await fetch(`${baseUrl}/tests/${filename}`);
+            const res = await fetch(`${baseUrl}/public/tests/${filename}`);
             const test = await res.json();
             currentTest = test;
 
