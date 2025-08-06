@@ -20,6 +20,8 @@
     <div id="timer"><b>60 minutes left</b></div>
 
     <script>
+      const baseURL = "";
+      
       // Thời gian bắt đầu tính bằng phút
       let timeLeft = 60; // 60 phút
 
@@ -49,7 +51,6 @@
 
   <div id="description">
     <script>
-        const baseURL = "";
         async function displayname(filename, index) {
           const res = await fetch(`${baseUrl}/tests/${filename}`);
           const test = await res.json();
