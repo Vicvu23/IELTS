@@ -1,42 +1,16 @@
-const express = require('express');
-const fs = require('fs');
-const path = require('path');
-const cors = require('cors');
-
+const express = require("express");
+const path = require("path");
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 10000;
 
-// Cần dòng này để phục vụ file tĩnh (html, css, js, ảnh...) từ thư mục public/
-app.use(express.static(path.join(__dirname, 'public')));
+// Trỏ đến thư mục chứa các file HTML
+app.use(express.static(path.join(__dirname, "public")));
 
-app.use(cors());
-
-app.get('/tests/:filename', (req, res) => {
-  const filename = req.params.filename;
-  const filePath = path.join(__dirname, 'data', filename);
-
-  if (!fs.existsSync(filePath)) {
-    return res.status(404).json({ error: 'Không tìm thấy đề thi' });
-  }
-
-  const content = fs.readFileSync(filePath, 'utf8');
-
-  try {
-    const json = JSON.parse(content);
-    res.json(json);
-  } catch (err) {
-    res.status(500).json({ error: 'File JSON bị lỗi' });
-  }
+// Nếu người dùng truy cập "/"
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
 app.listen(PORT, () => {
   console.log(`✅ Server chạy tại http://localhost:${PORT}`);
-});
-
-// Serve static files from the "public" folder
-app.use(express.static(path.join(__dirname, 'public')));
-
-// Fallback: return index.html if route not found (for frontend SPA or static homepage)
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
