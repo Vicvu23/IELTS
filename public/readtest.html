@@ -20,7 +20,8 @@
     <div id="timer"><b>60 minutes left</b></div>
 
     <script>
-      const baseURL = "";
+       
+      let currentTest = null;
       
       // Thời gian bắt đầu tính bằng phút
       let timeLeft = 60; // 60 phút
@@ -52,7 +53,7 @@
   <div id="description">
     <script>
         async function displayname(filename, index) {
-          const baseURL = "";
+           
           const res = await fetch(`${baseUrl}/tests/${filename}`);
           const test = await res.json();
           currentTest = test;
@@ -69,7 +70,7 @@
   <div class="container">
     <div id="reading" contenteditable="false">
       <script>
-        const baseURL = "";
+         
         let currentTest = null;
 
         // const 
@@ -154,7 +155,7 @@
       <div id="question-area">
         <script>
           async function loadTest(filename, index) {
-            const baseURL = "";
+             
             let questionIndex = index === 0 ? 1 : (index === 1 ? 14 : 27);
             const res = await fetch(`${baseUrl}/tests/${filename}`);
             const test = await res.json();
