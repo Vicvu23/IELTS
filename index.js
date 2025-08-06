@@ -32,3 +32,11 @@ app.get('/tests/:filename', (req, res) => {
 app.listen(PORT, () => {
   console.log(`✅ Server chạy tại http://localhost:${PORT}`);
 });
+
+// Serve static files from the "public" folder
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Fallback: return index.html if route not found (for frontend SPA or static homepage)
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
