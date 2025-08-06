@@ -1,5 +1,3 @@
-// server.js
-
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
@@ -8,12 +6,11 @@ const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(cors());
-
-// ✅ Thêm dòng này để phục vụ index.html và các file tĩnh
+// Cần dòng này để phục vụ file tĩnh (html, css, js, ảnh...) từ thư mục public/
 app.use(express.static(path.join(__dirname, 'public')));
 
-// API đọc file JSON đề thi
+app.use(cors());
+
 app.get('/tests/:filename', (req, res) => {
   const filename = req.params.filename;
   const filePath = path.join(__dirname, 'data', filename);
@@ -32,7 +29,6 @@ app.get('/tests/:filename', (req, res) => {
   }
 });
 
-// Khởi động server
 app.listen(PORT, () => {
   console.log(`✅ Server chạy tại http://localhost:${PORT}`);
 });
