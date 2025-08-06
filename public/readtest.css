@@ -141,7 +141,7 @@ input[type="radio"] {
     border: 0;
     display: fixed;
     right:0;
-    width: 100px;
+    width: 80px;
     height: 50px;
     font-size: 20px;
     position: fixed;
@@ -166,7 +166,7 @@ input[type="radio"] {
 /*BUTTON PASSAGE 1*/
 #p1, #p2, #p3 {
   display: flex;
-  width: 80px;
+  width: 75px;
   height: 50px;
   border: 0;
   font-size: 17px;
