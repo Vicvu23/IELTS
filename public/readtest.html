@@ -1,0 +1,468 @@
+<!-- readtest.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Reading test</title>
+  <link rel="stylesheet" href="readtest.css">
+
+  <!--
+  Tính năng lưu đáp án user đang lỗi, cần fix
+  -->
+
+</head>
+<body> 
+  <div class="heading">
+    <div id="logo">
+      <img src="img\IELTS-logo.png" alt="" id = "innerlogo">
+    </div>
+
+    <div id="timer"><b>60 minutes left</b></div>
+
+    <script>
+      // Thời gian bắt đầu tính bằng phút
+      let timeLeft = 60; // 60 phút
+
+      function updateTimer() {
+        const timerElement = document.getElementById("timer");
+        
+        if (timeLeft > 1) {
+          timerElement.innerText = `${timeLeft} minutes left`;
+        } else if (timeLeft === 1) {
+          timerElement.innerText = `1 minute left`;
+        } else {
+          submitAnswers();
+          clearInterval(countdown); // Dừng đếm
+        }
+
+        timeLeft--;
+      }
+
+      // Gọi ngay lần đầu tiên
+      updateTimer();
+
+      // Cập nhật mỗi phút (60000 ms)
+      const countdown = setInterval(updateTimer, 60000);
+    </script>
+
+  </div>
+
+  <div id="description">
+    <script>
+        async function displayname(filename, index) {
+          const res = await fetch(`http://localhost:3000/tests/${filename}`);
+          const test = await res.json();
+          currentTest = test;
+
+          const container = document.getElementById('description');
+          container.innerHTML = `
+            <h2 style = "padding-top: 5px">${test.reading[index].pass}</h2> 
+            <p> ${test.reading[index].description} </p>
+          `;
+        }
+    </script>
+  </div>
+
+  <div class="container">
+    <div id="reading" contenteditable="false">
+      <script>
+        let currentTest = null;
+
+        // const 
+
+        // Lấy tên file từ URL (ví dụ: test.html?file=test1.json)
+        const params = new URLSearchParams(window.location.search);
+        const file = params.get('file');
+
+        async function loadread(filename, index) { // kkhai báo hàm bất đồng bộ async để sử dụng await khi gọi API
+          const res = await fetch(`http://localhost:3000/tests/${filename}`);
+          const test = await res.json();
+          currentTest = test;
+
+          const container = document.getElementById('reading');
+          container.innerHTML = `<h1>${test.reading[index].title}</h1>`;
+
+          container.innerHTML += `
+            <p style="font-size: 20px">
+              <i>${test.reading[index].forewords}</i>
+            </p>
+          `
+
+          test.reading[index].paragraphs.forEach((p) => {
+            container.innerHTML += `
+            <div>
+              <p style="font-size: 20px">${p}</p>
+            </div>
+            `
+          });
+
+          //kiểm tra có annotation hay không:
+          if (
+            test.reading[index].annotation && 
+            Array.isArray(test.reading[index].annotation) &&
+            test.reading[index].annotation.length > 0
+          ) {
+            container.innerHTML +=
+            `<p>---------------------------------------------------------------------</p>`
+            test.reading[index].annotation.forEach((a) => {
+              container.innerHTML += `
+                <div id = "annotation">
+                  <p> ${a} </p>
+                </div>
+              `
+            })
+          }
+
+        } 
+      </script>
+    </div>
+
+    <div class="container">
+      <div id = "resizer">
+        <script>
+          const resizer = document.getElementById("resizer");
+          const leftSide = document.getElementById("reading");
+
+          resizer.addEventListener('mousedown', function (e) {
+            e.preventDefault();
+
+            document.addEventListener('mousemove', resize);
+            document.addEventListener('mouseup', stopResize);
+          });
+
+          function resize(e) {
+            const containerOffsetLeft = document.querySelector('.container').offsetLeft;
+            const newLeftWidth = e.clientX - containerOffsetLeft;
+
+            leftSide.style.width = `${newLeftWidth}px`;
+          }
+
+          function stopResize() {
+            document.removeEventListener('mousemove', resize);
+            document.removeEventListener('mouseup', stopResize);
+          }
+        </script>
+      </div>
+    </div>
+
+    <div class="questions">
+      <div id="testContent">Đang tải đề...</div>
+      <div id="question-area">
+        <script>
+          async function loadTest(filename, index) {
+            let questionIndex = index === 0 ? 1 : (index === 1 ? 14 : 27);
+            const res = await fetch(`http://localhost:3000/tests/${filename}`);
+            const test = await res.json();
+            currentTest = test;
+
+            const container = document.getElementById('testContent');
+            container.innerHTML = `<h2>${test.reading[index].pass}</h2>`;
+
+            test.reading[index].questions.forEach((q, i) => {
+              if (q.type === "mcq" || q.type === "tfn" || q.type === "ynn") {
+                // Dạng mới: q.data là mảng các câu hỏi
+                if (Array.isArray(q.data)) {
+                  q.data.forEach((item, dataIdx) => {
+                    container.innerHTML += `
+                      <div id="question-${questionIndex}">
+                        <p><strong>${questionIndex}.</strong> ${item.question}</p>
+                        ${item.options.map(
+                          opt => `
+                            <div class="options" style = "margin: 5px">
+                              <label><input type="radio" name="q${questionIndex}" value="${opt}"> ${opt}</label><br>
+                            </div>
+                          `
+                        ).join('')}
+                      </div>
+                    `;
+                    questionIndex++;
+                  });
+                }
+              } else if (q.type === "matching-information") {
+                const data = q.data[0];
+                container.innerHTML += `
+                  <style>
+                    table {
+                      border: solid 1px;
+                      width: 100%;
+                    }
+                    #tr1 {
+                      background-color: #469FFF;
+                    }
+                    th {
+                      width: 100px;
+                    }
+                  </style>
+                  <table>
+                    <tr id="tr1">
+                      <th style = "width: 500px"> Questions </th>
+                      ${data.options.map(
+                        opt => `<th> ${opt} </th>`
+                      ).join('')}
+                    </tr>
+                    ${data.question.map(
+                      (opt, rowi) => `
+                        <tr id="question-${questionIndex}">
+                          <th style="text-align: left">${questionIndex}. ${opt} </th>
+                          ${data.options.map(
+                            opt2 => `
+                              <th>
+                                <label><input type="radio" name="q${i}_${rowi}" value="${opt2}"></label><br>
+                              </th>
+                            `
+                          ).join('')}
+                        </tr>
+                        ${(() => { questionIndex++; return '' })()}
+                      `
+                    ).join('')}
+                  </table>
+                `;
+              } else if (q.type === "gap") {
+                q.data.forEach(item => {
+                  container.innerHTML += `
+                    <div id="question-${questionIndex}" class="gap-question">
+                      <p style="margin: 7px, line-height: 1.8">
+                        ${item.prefix ?? ""}
+                        <strong>${questionIndex}.</strong> <input type="text" name="q${questionIndex}" style="width: 200px; padding: 5px;">
+                        ${item.suffix ?? ""}
+                      </p>
+                    </div>
+                  `;
+                  questionIndex++;
+                });
+              }
+            });
+            loadAnswers(); // Gọi hàm loadAnswers sau khi đã thêm nội dung vào container
+          }
+
+          function saveAnswers() {
+            if (!currentTest) return;
+            const passageIndex = parseInt(localStorage.getItem("passageIndex") || "0", 10);
+            const questions = currentTest.reading[passageIndex].questions;
+            let questionIndex = (passageIndex === 0 ? 1 : (passageIndex === 1 ? 14 : 27));
+
+            questions.forEach((q, i) => {
+              if (q.type === "mcq" || q.type === "tfn" || q.type === "ynn") {
+                if (Array.isArray(q.data)) {
+                  q.data.forEach(() => {
+                    const selectedOption = document.querySelector(`input[name="q${questionIndex}"]:checked`);
+                    if (selectedOption) {
+                      localStorage.setItem(`answer_q${questionIndex}`, selectedOption.value);
+                    }
+                    questionIndex++;
+                  });
+                }
+              } else if (q.type === "matching-information") {
+                const data = q.data[0];
+                data.question.forEach((_, rowi) => {
+                  const selectedOption = document.querySelector(`input[name="q${i}_${rowi}"]:checked`);
+                  if (selectedOption) {
+                    localStorage.setItem(`answer_q${i}_${rowi}`, selectedOption.value);
+                  }
+                });
+                questionIndex += data.question.length;
+              } else if (q.type === "gap") {
+                q.data.forEach(() => {
+                  const input = document.querySelector(`input[name="q${questionIndex}"]`);
+                  if (input) {
+                    localStorage.setItem(`answer_q${questionIndex}`, input.value);
+                  }
+                  questionIndex++;
+                });
+              }
+            });
+          }
+
+        function loadAnswers() {
+          if (!currentTest) return;
+          const passageIndex = parseInt(localStorage.getItem("passageIndex") || "0", 10);
+          const questions = currentTest.reading[passageIndex].questions;
+          let questionIndex = (passageIndex === 0 ? 1 : (passageIndex === 1 ? 14 : 27));
+
+          questions.forEach((q, i) => {
+            if (q.type === "mcq" || q.type === "tfn" || q.type === "ynn") {
+              if (Array.isArray(q.data)) {
+                q.data.forEach(() => {
+                  const questionName = 'q' + questionIndex;
+                  const savedAnswer = localStorage.getItem('answer_' + questionName);
+                  if (savedAnswer) {
+                    const radioToCheck = document.querySelector(`input[name="${questionName}"][value="${savedAnswer}"]`);
+                    if (radioToCheck) radioToCheck.checked = true;
+                  }
+                  questionIndex++;
+                });
+              }
+            } else if (q.type === "matching-information") {
+              const data = q.data[0];
+              data.question.forEach((_, rowi) => {
+                const questionName = `q${i}_${rowi}`;
+                const savedAnswer = localStorage.getItem('answer_' + questionName);
+                if (savedAnswer) {
+                  const radioToCheck = document.querySelector(`input[name="${questionName}"][value="${savedAnswer}"]`);
+                  if (radioToCheck) radioToCheck.checked = true;
+                }
+              });
+              questionIndex += data.question.length;
+            } else if (q.type === "gap") {
+              q.data.forEach(() => {
+                const questionName = 'q' + questionIndex;
+                const savedAnswer = localStorage.getItem('answer_' + questionName);
+                if (savedAnswer !== null) {
+                  const input = document.querySelector(`input[name="${questionName}"]`);
+                  if (input) input.value = savedAnswer;
+                }
+                questionIndex++;
+              });
+            }
+          });
+        }
+
+        function scrollToQuestion(qNum) {
+          const questionEl = document.getElementById(`question-${qNum}`);
+          if (questionEl) {
+            questionEl.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        }
+
+        function selectPassage(index) {
+          saveAnswers();
+          
+          localStorage.setItem("passageIndex", index); // lưu trạng thái người dùng vào local storage
+          loadread(file, index);
+          loadTest(file, index);
+          displayname(file, index);
+          
+        }
+
+        function submitAnswers() {
+          if (!currentTest) return;
+
+          let correct = 0;
+          let total = 0;
+
+          for (let ind = 0; ind < currentTest.reading.length; ind++) {
+            let questionIndex = (ind === 0 ? 1 : (ind === 1 ? 14 : 27));
+            currentTest.reading[ind].questions.forEach((q, i) => {
+              if (q.type === "mcq" || q.type === "tfn" || q.type === "ynn") {
+                if (Array.isArray(q.data)) {
+                  q.data.forEach((item) => {
+                    const selected = document.querySelector(`input[name="q${questionIndex}"]:checked`);
+                    if (selected && selected.value.trim().toLowerCase() === item.answer.trim().toLowerCase()) correct++;
+                    total += 1;
+                    questionIndex++;
+                  });
+                }
+              } else if (q.type === "matching-information") {
+                const data = q.data[0];
+                data.question.forEach((_, rowIndex) => {
+                  const selected = document.querySelector(`input[name="q${i}_${rowIndex}"]:checked`);
+                  const answer = selected ? selected.value : null;
+                  if (answer && answer.trim().toLowerCase() === data.answer[rowIndex].trim().toLowerCase()) correct++;
+                });
+                total += data.question.length;
+                questionIndex += data.question.length;
+              } else if (q.type === "gap") {
+                q.data.forEach((item) => {
+                  const input = document.querySelector(`input[name="q${questionIndex}"]`);
+                  if (input && input.value.trim().toLowerCase() === item.answer.trim().toLowerCase()) {
+                    correct++;
+                  }
+                  total += 1;
+                  questionIndex++;
+                });
+              }
+            });
+          }
+
+          window.location.href = `result.html?score=${correct}&total=${total}`;
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+          // Tạo nút câu hỏi cho từng ques div nếu chưa có
+          const container0 = document.getElementById("ques-0");
+          const container1 = document.getElementById("ques-1");
+          const container2 = document.getElementById("ques-2");
+
+          if (container0 && container0.innerHTML.trim() === "") {
+            for (let i = 1; i <= 13; i++) {
+              container0.innerHTML += `<button onclick = "scrollToQuestion(${i})">${i}</button>`;
+            }
+          }
+
+          if (container1 && container1.innerHTML.trim() === "") {
+            for (let i = 14; i <= 26; i++) {
+              container1.innerHTML += `<button onclick = "scrollToQuestion(${i})">${i}</button>`;
+            }
+          }
+
+          if (container2 && container2.innerHTML.trim() === "") {
+            for (let i = 27; i <= 40; i++) {
+              container2.innerHTML += `<button onclick = "scrollToQuestion(${i})">${i}</button>`;
+            }
+          }
+        });
+
+        // Gọi hàm load khi trang mở
+        // if (file) loadTest(file);
+        // else document.getElementById('testContent').textContent = 'No question found!';
+
+        const savedIndex = parseInt(localStorage.getItem("passageIndex") || "0", 10);
+        if (file) selectPassage(0);
+        else document.getElementById('testContent').textContent = 'No question found!';
+      </script>
+      </div>
+    </div>
+  </div>
+
+  <div class="pass_display">
+      <div id = "pass">
+          <!-- passage 1 -->
+          <div class="wrapbut">
+            <button onclick="selectPassage(0)" id="p1">Part 1</button>
+            <div id="ques-0"></div>
+
+            <button onclick="selectPassage(1)" id="p2">Part 2</button>
+            <div id="ques-1"></div>
+
+            <button onclick="selectPassage(2)" id="p3">Part 3</button>
+            <div id="ques-2"></div>
+
+            <button onclick="submitAnswers()" id = "submit"><b>Submit</b></button>
+          </div>
+      </div>
+  </div>
+
+
+  <div id="fullscreen-modal" style="
+    position:fixed;top:0;left:0;width:100vw;height:100vh;
+    background:rgba(0,0,0,0.8);z-index:9999;display:flex;
+    align-items:center;justify-content:center;flex-direction:column;
+  ">
+    <div style="color:white;font-size:2em;margin-bottom:20px;">
+      <p>
+      Vui lòng bấm để mở chế độ toàn màn hình và bắt đầu làm bài!<br><br>
+      <b>LƯU Ý: Bài làm sẽ tự động nộp khi thoát khỏi chế độ toàn màn hình.</b>
+      </p>
+    </div>
+    <button id="fullscreen-btn" style="font-size:1.5em;padding:15px 40px;cursor:pointer;">
+      Mở toàn màn hình
+    </button>
+  </div>
+  <script>
+    window.addEventListener('unload', function() {
+      localStorage.clear();
+    });
+    document.getElementById('fullscreen-btn').onclick = function() {
+      if (document.documentElement.requestFullscreen) {
+        document.documentElement.requestFullscreen();
+      }
+      document.getElementById('fullscreen-modal').style.display = 'none';
+    };
+    document.addEventListener('fullscreenchange', function() {
+    if (!document.fullscreenElement) {
+      submitAnswers();
+    }
+  });
+  </script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!-- result.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Kết quả bài thi</title>
+</head>
+<body>
+  <h1>KẾT QUẢ</h1>
+  <p id="resultText">Đang tính kết quả...</p>
+  <a href="index.html">
+    <button>Home</button>
+  </a>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const score = params.get('score');
+    const total = params.get('total');
+
+    const resultText = document.getElementById('resultText');
+
+    if (score !== null && total !== null) {
+      resultText.textContent = `✅ Bạn đã làm đúng ${score}/${total} câu (${Math.round(score / total * 100)}%)`;
+    } else {
+      resultText.textContent = '❌ Không có dữ liệu điểm!';
+    }
+  </script>
+</body>
+</html>

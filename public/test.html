@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Nhiều câu hỏi trắc nghiệm</title>
+</head>
+<body>
+
+  <h3>Câu hỏi 1: Thủ đô của Việt Nam là gì?</h3>
+  <label><input type="radio" name="question1" value="A"> A. TP.HCM</label><br>
+  <label><input type="radio" name="question1" value="B"> B. Hà Nội</label><br>
+  <label><input type="radio" name="question1" value="C"> C. Đà Nẵng</label><br><br>
+
+  <h3>Câu hỏi 2: 2 + 2 = ?</h3>
+  <label><input type="radio" name="question2" value="A"> A. 3</label><br>
+  <label><input type="radio" name="question2" value="B"> B. 4</label><br>
+  <label><input type="radio" name="question2" value="C"> C. 5</label><br><br>
+
+  <h3>Câu hỏi 3: Màu của bầu trời là?</h3>
+  <label><input type="radio" name="question3" value="A"> A. Xanh</label><br>
+  <label><input type="radio" name="question3" value="B"> B. Đỏ</label><br>
+  <label><input type="radio" name="question3" value="C"> C. Vàng</label><br><br>
+
+  <!-- JavaScript -->
+  <script>
+    // Danh sách tên các câu hỏi
+    // const questionNames = ['question1', 'question2', 'question3'];
+    function saveAnswers() {
+      for (let i = 1; i <= 3; i++) {
+        const questionName = 'question' + i;
+        const selectedOption = document.querySelector(`input[name="${questionName}"]:checked`);
+        if (selectedOption) {
+          localStorage.setItem('answer_' + questionName, selectedOption.value);
+          console.log(`Đã lưu đáp án ${selectedOption.value} cho ${questionName}`);
+        }
+      }
+    }
+      // for (let i = 1; i <= 3; i++) {
+      //   const questionName = 'question' + i;
+      //   const savedAnswer = localStorage.getItem('answer_' + questionName);
+      //   if (savedAnswer) {
+      //     const radioToCheck = document.querySelector(`input[name="${questionName}"][value="${savedAnswer}"]`);
+      //     if (radioToCheck) radioToCheck.checked = true;
+      //   }
+
+      //   const radios = document.querySelectorAll(`input[name="${questionName}"]`);
+      //   radios.forEach(radio => {
+      //     radio.addEventListener('change', function () {
+      //       localStorage.setItem('answer_' + questionName, this.value);
+      //       console.log(`Đã lưu đáp án ${this.value} cho ${questionName}`);
+      //     });
+      //   });
+      // }
+
+    function loadAnswers() {
+      // Lấy đáp án đã lưu từ localStorage và đánh dấu radio tương ứng
+      for (let i = 1; i <= 3; i++) {
+        const questionName = 'question' + i;
+        const savedAnswer = localStorage.getItem('answer_' + questionName);
+        if (savedAnswer) {
+          const radioToCheck = document.querySelector(`input[name="${questionName}"][value="${savedAnswer}"]`);
+          if (radioToCheck) radioToCheck.checked = true;
+        }
+
+        const radios = document.querySelectorAll(`input[name="${questionName}"]`);
+        radios.forEach(radio => {
+          radio.addEventListener('change', function () {
+            localStorage.setItem('answer_' + questionName, this.value);
+            console.log(`Đã lưu đáp án ${this.value} cho ${questionName}`);
+          });
+        });
+      }
+    }
+  </script>
+
+</body>
+</html>

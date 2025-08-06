@@ -1,0 +1,43 @@
+/* tag and class css */
+
+body {
+    background-color: azure;
+}
+
+button {
+    border-radius: 5px;
+    width: 200px;
+    height: 50px;
+    margin: 15px;
+    font-size: large;
+}
+
+/* id css */
+
+#logo {
+    width: 20%;
+    height: auto;
+}
+
+#tit {
+    text-align: center;
+}
+
+#choices {
+    text-align: center;
+    margin: 30px;
+}
+
+#foot {
+    background-color: #d0e8f2;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 14px;
+    color: #333;
+
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+

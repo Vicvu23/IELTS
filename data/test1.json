@@ -1,0 +1,257 @@
+{
+  "title": "Passage 1",
+
+  "reading": [
+    {
+      "type": "pass1",
+      "description": "Read the text and answer questions 1–13.",
+      "pass": "Passage 1",
+      "title": "THE DEVELOPMENT OF THE SILK INDUSTRY",
+      "forewords": "Silk, a natural fibre produced by a particular worm called a silkworm, has been used in clothing for many centuries.",
+      "paragraphs":[
+        "<b>A. </b>When silk was first discovered in China over 4,500 years ago, it was reserved exclusively for the use of the emperor, his close relations and the very highest of his dignitaries. Within the palace, the emperor is believed to have worn a robe of white silk; outside, he, his principal wife, and the heir to the throne wore yellow, the colour of the earth.",
+        "<b>B. </b>Gradually silk came into more general use, and the various classes of Chinese society began wearing tunics of silk. As well as being used for clothing and decoration, silk was quite quickly put to industrial use, and rapidly became one of the principal elements of the Chinese economy. It was used in the production of musical instruments, as string for fishing, and even as the world’s first luxury paper. Eventually even the common people were able to wear garments of silk.",
+        "<b>C. </b>During the Han dynasty (206 BC-220 AD), silk ceased to be a mere fabric and became a form of currency. Farmers paid their taxes in grain and silk, and silk was used to pay civil servants and to reward subjects for outstanding services. Values were calculated in lengths of silk as they had previously been calculated in weight of gold. Before long, silk became a currency used in trade with foreign countries, which continued into the Tang dynasty (616-907 AD). It is possible that this added importance was the result of a major increase in production. Silk also found its way so thoroughly into the Chinese language that 230 of the 5,000 most common characters of <strong> Mandarin* </strong> have 'silk' as their key component.",
+        "<b>D. </b>Silk became a precious commodity, highly sought after by other countries from an early date, and it is believed that the silk trade actually existed before the <strong> Silk Road** </strong>was officially opened in the second century BC. An Egyptian mummy with a silk thread in her hair, dating from 1070 BC, has been discovered in the village of Deir el Medina near the Valley of the Kings, and is probably the earliest evidence of the silk trade. During the second century BC, the Chinese emperor Han Wu Di’s ambassadors travelled as far west as Persia and Mesopotamis, bearing gifts including silks. A range of important finds of Chinese silks have also been made along the Silk Road. One of the most dramatic of these finds was some Tang silk discovered in 1900. It is believed that around 1015 AD Buddhist monks, possibly alarmed by the threat of invasion by Tibetan people, had sealed more than ten thousand manuscripts and silk paintings, silk banners and textiles in caves near Dunhuang, a trading station on the Silk Road in north-west China.",
+        "<b>E. </b>Some historians believe the first Europeans to set eyes upon the fabulous fabric were the Roman legions of Marcus Licinius Crassus, Governor of Syria. According to certain accounts of the period, at an important battle near the Euphrates River in 53 BC. the Roman soldiers were so startled by the bright silken banners of the enemy that they fled in panic. Yet, within decades Chinese silks were widely worn by the rich and noble families of Rome, The Roman Emperor Heliogabalus (218-222 AD) wore nothing but silk. By 380 AD, the Roman historian Marcellinnus Ammianus reported that. The use of silk, which was one confined to the nobility, has now spread to all classes without distinction - even to the lowest. The desire for silk continued to increase over the centuries. Despite this demand, the price of silk remained very high.",
+        "<b>F. </b>In spite of their secrecy about production methods, the Chinese eventually lost their monopoly on silk production. Knowledge of silk production methods reached Korea around 200 BC, when waves of Chinese immigrants arrived there. Shortly after 300 AD, it travelled westward, and the cultivation of the silkworm was established in India.",
+        "<b>G. </b>Around 550 AD silk production reached the Middle East. Records indicate that two monks from Constantinople (modern-day Istanbul), capital of the Byzantine Empire, appeared at their emperor’s court with silkworm eggs which they had obtained secretly, and hidden in their hollow bamboo walking sticks. Under their supervision the eggs hatched into worms, and the worms spun silk threads. Byzantium was in the silk business at last. The Byzantine church and state created imperial workshops, monopolising production and keeping the secret to themselves. This allowed a silk industry to be established, undercutting the market for ordinary-grade Chinese silk. However, high quality silk textiles, woven in China especially for the Middle Eastern market, continued to achieve high prices in the West, and trade along the Silk Road continued as before. By the sixth century the Persians, too, had mastered the art of silk weaving, developing their own rich patterns and techniques. But it wasn’t until the 13th century that Italy began silk production, with the introduction of 2,000 skilled silk weavers from Constantinople. Eventually, silk production became widespread throughout Europe.",
+        "<b>H. </b>World silk production has approximately doubled during the last 30 years in spite of manmade fibres replacing certain uses of silk. Before this period, China and Japan were the two main producers, together manufacturing more than 50 per cent of world production each year. After the late 1970s, however, China dramatically increased its silk production, and once again became the world's leading producer."
+      ],
+      "annotation": [
+        "<b>Mandarin*</b> – A group of related Chinese dialects which have been recognised as the 'national language' since the early 20th century",
+        "<b>Silk Road**</b> – An ancient trade route between China and the Mediterranean Sea"
+      ],
+      "questions": [
+        {
+          "type":"gap",
+          "instructions": "Complete the notes below. Write <b>ONE WORD ONLY</b> from the passage for each answers.",
+          "subheading": "Chinese silk",
+          "data": [
+            {
+              "prefix": "<b>Early Uses</b><br><b>Clothing</b><p>- at first, silk only available to Chinese of high rank</p>- emperor wore ",
+              "suffix": "silk indoors<br><b>In industry</b>",
+              "answer": "white"
+            },
+            {
+              "prefix": "- silk items included parts of musical instruments, fishing strings and ",
+              "suffix": "<p><b>Currency</b><br></p>",
+              "answer": "paper"
+            },
+            {
+              "prefix": "- silk was used as payment of ",
+              "suffix": "as well as for wages and rewards<br>",
+              "answer": "taxes"
+            },
+            {
+              "prefix": "- silk replaced ",
+              "suffix": "as a unit of value<br>",
+              "answer": "gold"
+            },
+            {
+              "prefix": "- silk soon used as payment in ",
+              "suffix": "trade<br>",
+              "answer": "foreign"
+            },
+            {
+              "prefix": "<p><b>Evidence of silk trade</b></p>1070 BC, Egypt:<br>- hair of a",
+              "suffix": "contained silk<br><p><b>2nd century BC, Persia and Mesopotamia:</b></p>- gifts of silk were presented by Chinese ambassadors<p><b>1015 AD, north-west China:</b></p>",
+              "answer": "mummy"
+            },
+            {
+              "prefix": "- silk objects were hidden inside ",
+              "suffix": "",
+              "answer": "caves"
+            }
+          ]
+        },
+        {
+          "type":"tfn",
+          "instructions": "Choose <b>TRUE</b> if the statement agrees with the information given in the text, choose <b>FALSE</b> if the statement contradicts the information, or choose <b>NOT GIVEN</b> if there is no information on this.",
+          "subheading": "",
+          "data":[
+            {
+              "question": "Their first sight of silk created fear among Roman soldiers.",
+              "options": ["True", "False", "Not Given"],
+              "answer": "True"
+            },
+            {
+              "question": " The quality of Chinese silk imported by the early Romans varied widely.",
+              "options": ["True", "False", "Not Given"],
+              "answer": "Not Given"
+            },
+            {
+              "question": " The quality of Chinese silk imported by the early Romans varied widely.",
+              "options": ["True", "False", "Not Given"],
+              "answer": "False"
+            },
+            {
+              "question": "The price of high-grade Chinese silk fell due to competition from Middle-Eastern producers.",
+              "options": ["True", "False", "Not Given"],
+              "answer": "False"
+            },
+            {
+              "question": "Silk was produced in the Middle East several centuries before it was produced in Europe.",
+              "options": ["True", "False", "Not Given"],
+              "answer": "True"
+            },
+            {
+              "question": "Global silk production has declined in recent years.",
+              "options": ["True", "False", "Not Given"],
+              "answer": "False"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "pass2",
+      "description": "Read the text and answer questions 14-26.",
+      "pass": "Passage 2",
+      "title": "THE DISCOVERY OF A BABY MAMMOTH",
+      "forewords": "A near-perfect frozen mammoth offers clues to a great vanished species",
+      "paragraphs": [
+        "<b>A. </b>On a May morning in 2007, on the Yamal Peninsula in northwestern Siberia, a Nenets reindeer herder named Yuri Khudi stood on a sandbar on the Yuribey River, looking carefully at a diminutive corpse. Although he had never seen such an animal before, Khudi had seen many mammoth tusks, the thick corkscrew shafts that his people found each summer, and this persuaded him the corpse was a baby mammoth. It was eerily well preserved. Apart from its missing hair and toenails, it was perfectly intact. Khudi realised the find might be significant and he knew he couldn’t just return home and forget all about it. He therefore decided to travel to the small town of Yar Sale to consult an old friend named Kirill Serotetto. His friend took him to meet the director of the local museum, who persuaded the local authorities to fly Khudi and Serotetto back to the Yuribey River to collect the baby mammoth.",
+        "<b>B. </b>Mammoths became extinct between 14,000 and 10,000 years ago and since the extinctions coincided with the end of the most recent Ice age, many researchers believe that the primary cause of the great die-off was the sharp rise in temperature, which dramatically altered the vegetation. ‘We have strong evidence that the temperature rise played a significant part in their extinction,’ says Adrian Lister, a palaeontologist and mammoth expert at London’s Natural History Museum. ‘In Eurasia, the timing of the two events matches closely.’ The extinctions also coincided, however, with the arrival of modern humans. In addition to exploiting mammoths for food, they used their bones and tusks to make weapons, tools, and even dwellings. Some scientists believe humans were as much to blame as the temperature rise for the great die-off. Some say they caused it.",
+        "<b>C. </b>The body of the baby mammoth was eventually sent to the St Petersburg Zoological Museum in Russia. Alexei Tikhonov, the museum’s director, was one of the first scientists to view the baby, a female. According to Tikhonov, Khudi had rescued ‘the best preserved mammoth to come down to us from the Ice Age,’ and he gratefully named her Lyuba, after Khudi’s wife. Tikhonov knew that no-one would be more excited by the find than Dan Fisher, an American colleague at the University of Michigan who had spent 30 years researching the lives of mammoths. Tikhonov invited Fisher, along with Bernard Buigues, a French mammoth hunter, to come and view the baby mammoth. Fisher and Buigues had examined other specimens together, including infants, but these had been in a relatively poor state. Lyuba was another story entirely. Other than the missing hair and toenails, the only flaw in her pristine appearance was a curious dent above the trunk.",
+        "<b>D. </b>Fisher was particularly excited about one specific part of Lyuba’s anatomy: her milk tusks. Through his career, Fisher has taken hundreds of tusk samples. Most of these came from the Great Lakes region of North America, and his research showed that these animals continued to thrive, despite the late <b>Pleistocene*</b> temperature change. On the other hand, to Fisher the tusks often revealed telltale evidence of human hunting. His samples frequently came from animals that had died in the autumn, when they should have been at their peak after summer grazing, and less likely to die of natural causes, but also when humans would have been most eager to stockpile meat for the coming winter. He has done limited work in Siberia, but his analysis of tusks from Wrangel Island, off the coast of Siberia, suggests the same conclusion.",
+        "<b>E. </b>In December 2007, Buigues arranged for the specimen to be transported to Japan to undergo a CT scan by Naoki Suzuki of the Jikei University School of Medicine. The test confirmed her skeleton was undamaged, and her internal organs seemed largely intact. It also showed that the end of her trunk, and her throat, mouth, and windpipe were filled with dense sediment. Six months later, in a laboratory in St Petersburg, Fisher, Buigues, Suzuki, Tikhonov and other colleagues began a three-day series of tests on Lyuba. During these, Fisher noted a dense mix of clay and sand in her trunk, mouth and throat, which had been indicated earlier by the scan. In fact, the sediment in Lyuba’s trunk was packed so tightly that Fisher saw it as a possible explanation for the dent above her trunk. If she was frantically fighting for breath and inhaled convulsively, perhaps a partial vacuum was created in the base of her trunk, which would have flattened surrounding soft tissue. To Fisher, the circumstances of Lyuba’s death were clear: she had asphyxiated. Suzuki, however, proposed a different interpretation, seeing more evidence for drowning than asphyxiation.",
+        "<b>F. </b>Studies are ongoing, but Lyuba has begun to shed the secrets of her short life and some clues to the fate of her kind. Her good general health was shown in the record of her dental development, a confirmation for Fisher that dental research is useful for evaluating health and thus key to investigating the causes of mammoth extinction. Analysis of her well-preserved DNA has revealed that she belonged to a distinct population of Mammuthus primigenius and that, soon after her time, another population migrating to Siberia from North America would take their place. Finally, Lyuba’s premolars and tusks revealed that she had been born in late spring and was only a month old when she died."
+      ],
+      "annotation": [
+        "<b>Pleistocene era*</b>: the time between roughly 2.6 million years ago and 10,000 years ago"
+      ],
+      "questions": [
+        {
+          "type":"matching-information",
+          "instructions": "Reading Passage 2 has six paragraphs, <b>A-F</b>. Which paragraph contains the following information?",
+          "data": [
+            {
+              "question": [
+                "similarities between studies of mammoth remains from different parts of the world.",
+                "details of the uses to which mammoth body parts were put.",
+                "a theory that accounts for the damage to Lyuba’s face.",
+                "an explanation of how an individual was able to identify a small corpse.",
+                "a comparison between Lyuba and other young mammoth corpses."
+              ],
+              "options": ["A", "B", "C", "D", "E", "F"],
+              "answer": ["D", "B", "E", "A", "C"]
+            }
+          ]
+        },
+        {
+          "type": "matching-information",
+          "subheading": "",
+          "instructions": "<p>Look at the following statements (Questions 19-23) and the list of people below.</p><p>Match each statement with the correct person, <b>A-G</b>.</p><b>NB</b> You may use any letter more than once.",
+          "data":[
+            {
+              "question": [
+                "The indications are that mammoths died as a result of climate change.",
+                "Teeth analysis is important in discovering why mammoths died out.",
+                "The corpse of the baby mammoth is in better condition than any other that has been discovered.",
+                " It would be a mistake to ignore the baby mammoth’s discovery, because of its potential importance.",
+                "Mammoths often died at a time of year when they should have been in good physical condition.."
+              ],
+              "options": ["A", "B", "C", "D", "E", "F", "G"],
+              "answer": ["C", "E", "D", "A", "E"]
+            }
+          ]
+        },
+        {
+          "type": "gap",
+          "instructions": "Complete the sentences below using <b>NO MORE THAN TWO WORDS</b> from the text.",
+          "data": [
+            {
+              "prefix":"Some researchers say that a marked rise in temperature impacted on mammoths by changing the type of ",
+              "suffix":"available.",
+              "answer":"vegetation"
+            },
+            {
+              "prefix":"Fisher concluded that many of the mammoth tusks he looked at displayed signs of ",
+              "suffix":".",
+              "answer":"human hunting"
+            },
+            {
+              "prefix":"Not long after Lyuba’s death, the Mammuthus primigenius group she belonged to was replaced by another group that came from ",
+              "suffix":".",
+              "answer":"North America"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "pass3",
+      "description": "Read the text and answer questions 27-40.",
+      "pass": "Passage 3",
+      "title": "EATS, SHOOTS AND LEAVES",
+      "forewords": "—a book review",
+      "paragraphs": [
+        "<b>A. </b>The title of Eats, Shoots and Leaves refers to a famously misplaced comma in a wildlife manual that ended up suggesting a panda rather violently 'eats, shoots and leaves' instead of eating shoots and leaves. The author of this book, journalist Lynne Truss, is something akin to a militant linguist, dedicating this 'zero tolerance' manifesto on grammar to the striking Bolshevik printers of St. Petersburg who, in demanding the same remuneration for punctuation as they received for letters, ended up setting in motion the first Russian Revolution.",
+        "<b>B. </b>Some of the book involves humorous attacks on erroneous punctuation. There is the confused Shakespearian thespian who inadvertently turns a frantic plea: 'Go, get him surgeons!' into the cheerful encouragement of 'Go get him, surgeons!' Street and shop signs have a ubiquitous presence. A bakery declares 'FRESH DONUT'S SOLD HERE' and a florist curiously announces that 'Pansy's here!' (Is she?). The shameless title of a Hollywood film Two Weeks Notice is reeled in for criticism—'Would they similarly call it One Weeks Notice ?', Truss enquires—and sometimes, as in the case of signs promoting 'ANTIQUE'S' and 'Potatoe's'—one questions whether we are bearing witness to new depths of grammar ignorance, or a postmodern caricature of atrocious punctuation. Eats, Shoots and Leaves is not just a piece of comedy and ridicule, however, and Truss has plenty to offer on the question of proper grammar usage. If you have ever wondered whether it is acceptable to simply use an 'em dash' 1 in place of a comma—the verdict from Truss is that you can. 'The dash is less formal than the semicolon, which makes it more attractive,' she suggests. 'It enhances conversational tone; and...it is capable of quite subtle effects.' The author concludes, with characteristic wry condescension, that the em dash's popularity largely rests on people knowing it is almost impossible to use incorrectly. Truss is a personal champion of the semicolon, a historically contentious punctuation mark elsewhere maligned by novelist Kurt Vonnegut Jr., as a 'transvestite hermaphrodite representing absolutely nothing'. Coming to the semicolon's defense, Truss suggests that, while it can certainly be over-used—she refers to the dying words of one 20th century writer: 'I should have used fewer semicolons'—the semicolon can perform the role of a 'a kind of Special Policeman in the event of comma fights'.",
+        "<b>C. </b>Truss has come under criticism on two broad points. The first argument criticises the legitimacy of her authority as a punctuation autocrat. Louis Menand, writing in the New Yorker , details Eats, Shoots and Leaves' numerous grammatical and punctuation sins: a comma-free non-restrictive clause; a superfluous ellipsis; a misplaced apostrophe; a misused parenthesis; two misused semicolons; an erroneous hyphen in the word 'abuzz', and so on. In fact, as Menand notes, half the semicolons in the Truss book are spuriously deployed because they stem from the author's open flouting of the rule that semicolons must only connect two independent clauses. 'Why would a person not just vague about the rules but disinclined to follow them bother to produce a guide to punctuation?' Menand inquires. Ultimately, he holds Truss accused of producing a book that pleases those who 'just need to vent' and concludes that Eats, Shoots and Leaves is actually a tirade against the decline of language and print that disguises itself, thinly and poorly, as some kind of a style manual.",
+        "<b>D. </b>Linguist David Chrystal has criticised what he describes as a 'linguistic purism' coursing through Truss' book. Linguistic purism is the notion that one variety of language is somehow more pure than others, with this sense of purity often based on an idealised historical point in the language's development, but sometimes simply in reference to an abstract ideal. In The Fight for English: How Language Pundits Ate , Shot and Left , Chrystal—a former colleague of Truss—condemns the no-holds-barred approach to punctuation and grammar. 'Zero tolerance does not allow for flexibility,' he argues. 'It is prescriptivism taken to extremes. It suggests that language is in a state where all the rules are established with 100 per cent certainty. The suggestion is false. We do not know what all the rules of punctuation are. And no rule of punctuation is followed by all of the people all of the time.'",
+        "<b>E. </b>Other detractors of Truss' 'prescriptivism' are careful to disassociate needless purism from robust and sensible criticism, an oppositional stance they call descriptivism. 'Don't ever imagine,' Geoffrey K. Pullum on the Language Log emphasises, 'that I think all honest attempts at using English are just as good as any others. [Bad] writing needs to be fixed. But let's make sure we fix the right things.' In other words, we do not require a dogmatic approach to clean up misused language. Charles Gaulke concurs, noting that his opposition to 'prescriptivism' does not require contending with the existence of standards themselves, but questioning whether our standards should determine what works, or whether what works should determine our standards.",
+        "<b>F. </b>Ultimately, it is unlikely the purists and pedagogues will ever make absolute peace with those who see language as a fluid, creative process within which everyone has a role to play. Both sides can learn to live in a sort of contentious harmony, however. Creativity typically involves extending, adapting and critiquing the status quo, and revising and reviving old traditions while constructing new ones. Rules must exist in order for this process to take place, if only for them to be broken. On the flip side, rules have an important role to play in guiding our language into forms that can be accessed by people across all manner of differences, so it is vital to acknowledge the extent to which they can be democratic, rather than merely autocratic in function. Nevertheless, all the regulations in the world cannot stem the natural spring of language, which bursts through rivets and snakes around the dams that linguistic authorities may try to put in place. We should celebrate rather than curse these inevitable tensions."
+      ],
+      "annotation": [
+      ],
+      "questions": [
+        {
+          "type":"matching-information",
+          "instructions": "Reading Passage 2 has six paragraphs, <b>A-F</b>. Which paragraph contains the following information?",
+          "data": [
+            {
+              "question": [
+                "Mistakes should be corrected on the basis of common sense.",
+                "No one has legitimacy as an ultimate authority on punctuation use.",
+                "Eats, Shoots and Leaves is not the type of book it claims to be.",
+                "The idea that some forms of language can be better than others is wrong.",
+                "The semicolon has no real purpose.",
+                "We can ask whether rules are helpful without undermining the need for rules."
+              ],
+              "options": ["A", "B", "C", "D", "E"],
+              "answer": ["D", "B", "E", "A", "C", ""]
+            }
+          ]
+        },
+        {
+          "type": "gap",
+          "instructions": "Complete the sentences below using <b>NO MORE THAN THREE WORDS</b> from the text.",
+          "data": [
+            {
+              "prefix":"Eats, Shoots and Leaves is a book on punctuation by journalist Lynne Truss, who could be described as a ",
+              "suffix":". ",
+              "answer":"vegetation"
+            },
+            {
+              "prefix":"She dedicates the book to the Bolshevik Printers who started the  ",
+              "suffix":" by protesting for better pay conditions. The book is partly a humorous criticism of incorrect punctuation. ",
+              "answer":"human hunting"
+            },
+            {
+              "prefix":"Some of the examples are so bad it is possible that they are actually a ",
+              "suffix":".<br>",
+              "answer":"North America"
+            },
+            {
+              "prefix":"Truss also guides the reader on correct punctuation usage. She likes the em dash because it is not as ",
+              "suffix":"",
+              "answer":"North America"
+            },
+            {
+              "prefix":" as the semicolon, for example, but remains a ",
+              "suffix":"",
+              "answer":"North America"
+            },
+            {
+              "prefix":"  of the latter due to its ability to discipline areas of text that are crowded with commas.",
+              "suffix":"",
+              "answer":"North America"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

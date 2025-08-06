@@ -1,0 +1,11 @@
+.testop {
+  all: unset; /* ← reset toàn bộ style mặc định của button */
+  box-sizing: border-box;
+  height: 20px;
+  width: 80%;
+  background-color: #e0e0e0;
+  border: 1px solid #999;
+  text-align: center;
+  line-height: 20px;
+  cursor: pointer;
+}

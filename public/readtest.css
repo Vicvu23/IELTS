@@ -1,0 +1,216 @@
+html, body {
+  overflow:hidden;
+  font-family: sans-serif;
+  font-size: 20px;
+  height: 100%;
+  margin: 0;
+}
+
+#description {
+  background-color: #EFEDED;
+  border-radius: 10px;
+  width: 100%;
+  height: 70px;
+  padding-left: 20px;
+}
+
+#foot {
+    background-color: #d0e8f2;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 14px;
+    color: #333;
+
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+
+h2 {
+  font-size: 20px;
+  text-align: left;
+}
+
+.container {
+  display: flex;
+  height: 100%;
+  border-top: 1px solid #ccc;
+  margin-top: 5px;
+  max-width: 100%;
+  max-height: 80vh;
+  /* overflow-y: auto; */
+}
+
+#reading {
+  width: 50%;
+  min-width: 200px;
+  max-width: 70%;
+  padding: 10px;
+  border-right: 2px solid #aaa;
+  overflow-y: auto;
+  /* resize: horizontal; */
+  will-change: transform;
+}
+
+.questions {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+  will-change: transform;;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+th {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
+}
+
+input[type="radio"] {
+  transform: scale(1.2);
+}
+
+#resizer {
+  width: 5px;
+  background: gray;
+  cursor: col-resize;
+}
+
+.heading {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 10px;
+  height: 17px;
+}
+
+#logo {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 0px;
+}
+
+#innerlogo {
+  width: auto;
+  height: 75px;
+}
+
+
+#timer {
+  margin-top: 30px;
+  font-size: 20px;
+  color: black;
+  padding-bottom: 0 px;
+}
+
+.ques {
+  display: flex;
+}
+
+/*PHẦN HIỆN BUTTON CÂU HỎI*/
+.pass_display {
+  background-color: #eee;
+  width: 100%;
+  height: 50px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  /* padding: 0 20px; */
+}
+
+#pass{
+  width: 100%;
+  display: flex;
+  margin: 0 auto;
+  left: 0;
+}
+
+#submit {
+    /* margin-top: 20px;*/
+    border: 0;
+    display: fixed;
+    right:0;
+    width: 100px;
+    height: 50px;
+    font-size: 20px;
+    position: fixed;
+}
+
+#submit:hover {
+  background-color: #ccc;
+}
+
+.wrapbut {
+  display: flex;
+  width: 97%;
+  justify-content: flex-start;
+  gap: 0px;
+  /* background-color: red; */
+}
+
+.wrapbut > * {
+  margin: 0;
+}
+
+/*BUTTON PASSAGE 1*/
+#p1, #p2, #p3 {
+  display: flex;
+  width: 100px;
+  height: 50px;
+  border: 0;
+  font-size: 17px;
+  text-align: center;
+  padding-top: 15px;
+}
+
+#p1:hover, #p2:hover, #p3:hover {
+  background-color:#ccc;
+}
+
+/*QUESTIONS PASSAGE 1*/
+#ques-0, #ques-1, #ques-2 {
+  margin-left: 0px;
+  gap:2px;
+  display: flex;
+  background-color: #eee;
+  height: 50px;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-top: 10px;
+  
+  transition: transform;
+  transition-duration: 3s;
+  transition-timing-function: ease;
+  transition-delay: 0s;
+
+  /* display: none; */
+}
+
+#announcement1, #announcement2, #announcement3 {
+  display: flex;
+  width: fit-content;
+  background-color: blue;
+  display: none;
+}
+
+#ques-0.open, #ques-2.open, #ques-1.open {
+  transform: translateX();
+}
+
+#ques-1 button, #ques-2 button, #ques-0 button {
+  height: 35px;
+  width: auto;
+  text-align: center;
+  white-space: nowrap;
+}

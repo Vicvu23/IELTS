@@ -1,0 +1,92 @@
+<!-- reading.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>IELTS Practice</title>
+  <style>
+    h1 {
+      margin-bottom: 50px;
+      text-align: center;
+    }
+
+    .testop {
+      /* margin-bottom:10px; */
+      height: 40px;
+      width: 80%;
+      border: 0;
+      background-color: white;
+      align-items: center;
+    }
+
+    #container {
+      text-align: center;
+    }
+
+    .testop:hover {
+      background-color:lightslategray;
+      color: white;
+    }
+
+    #foot {
+      background-color: #d0e8f2;
+      text-align: center;
+      padding: 10px 0;
+      font-size: 14px;
+      color: #333;
+
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <h1>Chọn đề thi</h1>
+
+  <!-- Button mở đề thi ở trang mới -->
+  <div id = "container">
+    <script>
+      const container = document.getElementById('container');
+
+      fetch('test.json')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Lỗi khi tải file JSON');
+        }
+        return response.json();
+      })
+      .then(data => {
+        for (let key in data) {
+          container.innerHTML += `
+            <div>  
+              <hr style="border: none; height: 2px; background-color: gray; width: 80%;">
+
+              <button class="testop" onclick="startTest('${data[key]}.json')">
+                ${data[key]}
+              </button>
+              <hr style="border: none; height: 2px; background-color: gray; width: 80%;">
+            </div>
+          `;
+        }
+      })
+
+      .catch(error => {
+        console.error('Lỗi:', error);
+      });
+    </script>
+  </div>
+  
+
+  <script>
+    function startTest(filename) {
+      // Chuyển sang test.html, kèm tên file JSON trên URL
+      window.location.href= `readtest.html?file=${filename}&fullscreen=1`; // mở trên cùng trang
+    }
+  </script>
+
+  <div id = "foot">
+        <footer>IELTS practice web - by TuananhVu</footer>
+    </div>
+</body>
+</html>
