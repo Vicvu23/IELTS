@@ -4,11 +4,7 @@
 <head>
   <meta charset="utf-8">
   <title>Reading test</title>
-  <link rel="stylesheet" href="readtest.css?v=2">
-
-  <!--
-  Tính năng lưu đáp án user đang lỗi, cần fix
-  -->
+  <link rel="stylesheet" href="readtest.css">
 
 </head>
 <body> 
@@ -19,7 +15,7 @@
 
     <div id="timer"><b>60 minutes left</b></div>
 
-    <script>      
+    <script>
       // Thời gian bắt đầu tính bằng phút
       let timeLeft = 60; // 60 phút
 
@@ -47,80 +43,104 @@
 
   </div>
 
+  <!--CONTEXT MENU-->
+
+  <ul class="context">
+    <li class="context-link" id = "note-function">
+      <span class="context-label">
+        Note <img src="img/note-sticky-solid-full.svg" alt="note-image" width = "23px" height="23px">
+      </span>
+    </li>
+    <li class="context-link" id = "highlight-function">
+      <span class="context-label">
+        Highlight <img src="img/highlighter-solid-full.svg" alt="hightlight-image" width="23px" height="23px">
+      </span>
+    </li>
+  </ul>
+
   <div id="description">
     <script>
-        const baseUrl = "";
         async function displayname(filename, index) {
-           
-          const res = await fetch(`${baseUrl}/public/tests/${filename}`);
+          const res = await fetch(`${baseUrl}/tests/${filename}`);
           const test = await res.json();
           currentTest = test;
 
           const container = document.getElementById('description');
           container.innerHTML = `
             <h2 style = "padding-top: 5px">${test.reading[index].pass}</h2> 
-            <p> ${test.reading[index].description} </p>
+            <p style = "padding-bottom: 5px"> ${test.reading[index].description} </p>
           `;
         }
     </script>
   </div>
 
-  <div class="container">
-    <div id="reading" contenteditable="false">
-      <script>
-         
-        let currentTest = null;
-
-        // const 
-
-        // Lấy tên file từ URL (ví dụ: test.html?file=test1.json)
-        const params = new URLSearchParams(window.location.search);
-        const file = params.get('file');
-
-        async function loadread(filename, index) { // kkhai báo hàm bất đồng bộ async để sử dụng await khi gọi API
-          const res = await fetch(`${baseUrl}/public/tests/${filename}`);
-          const test = await res.json();
-          currentTest = test;
-
-          const container = document.getElementById('reading');
-          container.innerHTML = `<h1>${test.reading[index].title}</h1>`;
-
-          container.innerHTML += `
-            <p style="font-size: 20px">
-              <i>${test.reading[index].forewords}</i>
-            </p>
-          `
-
-          test.reading[index].paragraphs.forEach((p) => {
-            container.innerHTML += `
-            <div>
-              <p style="font-size: 20px">${p}</p>
-            </div>
-            `
-          });
-
-          //kiểm tra có annotation hay không:
-          if (
-            test.reading[index].annotation && 
-            Array.isArray(test.reading[index].annotation) &&
-            test.reading[index].annotation.length > 0
-          ) {
-            container.innerHTML +=
-            `<p>---------------------------------------------------------------------</p>`
-            test.reading[index].annotation.forEach((a) => {
-              container.innerHTML += `
-                <div id = "annotation">
-                  <p> ${a} </p>
-                </div>
-              `
-            })
-          }
-
-        } 
-      </script>
-    </div>
-
+  <div id="big-wrapper">
     <div class="container">
+      <div id="reading" contenteditable="false">
+        <script>
+          const baseUrl = "http://localhost:3000";
+          function save(index) {
+            const markButton = document.getElementById(`mark-${index}`);
+              const quesButton = document.getElementById(`but-${index}`);
+              if (markButton && quesButton) {
+                quesButton.classList.toggle("activate1");
+                markButton.classList.toggle("activate2");
+                // Lưu trạng thái vào localStorage
+                const isMarked = markButton.classList.contains("activate2");
+                localStorage.setItem(`mark_${index}`, isMarked ? "1" : "0");
+              }
+          }
+          let currentTest = null;
+
+          // const 
+
+          // Lấy tên file từ URL (ví dụ: test.html?file=test1.json)
+          const params = new URLSearchParams(window.location.search);
+          const file = params.get('file');
+
+          async function loadread(filename, index) { // kkhai báo hàm bất đồng bộ async để sử dụng await khi gọi API
+            const res = await fetch(`${baseUrl}/tests/${filename}`);
+            const test = await res.json();
+            currentTest = test;
+
+            const container = document.getElementById('reading');
+            container.innerHTML = `<h1>${test.reading[index].title}</h1>`;
+
+            container.innerHTML += `
+              <p style="font-size: 18px">
+                <i>${test.reading[index].forewords}</i>
+              </p>
+            `
+
+            test.reading[index].paragraphs.forEach((p) => {
+              container.innerHTML += `
+              <div>
+                <p style="font-size: 18px">${p}</p>
+              </div>
+              `
+            });
+
+            //kiểm tra có annotation hay không:
+            if (
+              test.reading[index].annotation && 
+              Array.isArray(test.reading[index].annotation) &&
+              test.reading[index].annotation.length > 0
+            ) {
+              container.innerHTML +=
+              `<p>---------------------------------------------------------------------</p>`
+              test.reading[index].annotation.forEach((a) => {
+                container.innerHTML += `
+                  <div id = "annotation">
+                    <p> ${a} </p>
+                  </div>
+                `
+              })
+            }
+
+          } 
+        </script>
+      </div>
+
       <div id = "resizer">
         <script>
           const resizer = document.getElementById("resizer");
@@ -146,100 +166,282 @@
           }
         </script>
       </div>
-    </div>
 
-    <div class="questions">
-      <div id="testContent">Đang tải đề...</div>
-      <div id="question-area">
-        <script>
-          async function loadTest(filename, index) {
-             
-            let questionIndex = index === 0 ? 1 : (index === 1 ? 14 : 27);
-            const res = await fetch(`${baseUrl}/public/tests/${filename}`);
-            const test = await res.json();
-            currentTest = test;
+      <div class="questions">
+        <div id="testContent">Đang tải đề...</div>
+        <div id="question-area">
+          <script>
+            async function loadTest(filename, index) {
+              let questionIndex = index === 0 ? 1 : (index === 1 ? 14 : 27);
+              const res = await fetch(`${baseUrl}/tests/${filename}`);
+              const test = await res.json();
+              currentTest = test;
 
-            const container = document.getElementById('testContent');
-            container.innerHTML = `<h2>${test.reading[index].pass}</h2>`;
+              const container = document.getElementById('testContent');
+              container.innerHTML = `<p style = "font-size: 30px"><strong>${test.reading[index].pass}</strong></p>`;
 
-            test.reading[index].questions.forEach((q, i) => {
-              if (q.type === "mcq" || q.type === "tfn" || q.type === "ynn") {
-                // Dạng mới: q.data là mảng các câu hỏi
-                if (Array.isArray(q.data)) {
-                  q.data.forEach((item, dataIdx) => {
-                    container.innerHTML += `
-                      <div id="question-${questionIndex}">
-                        <p><strong>${questionIndex}.</strong> ${item.question}</p>
-                        ${item.options.map(
-                          opt => `
-                            <div class="options" style = "margin: 5px">
-                              <label><input type="radio" name="q${questionIndex}" value="${opt}"> ${opt}</label><br>
-                            </div>
-                          `
+              test.reading[index].questions.forEach((q, i) => {
+                let start = questionIndex;
+                let end = questionIndex;
+
+                if (q.type === "mcq" || q.type === "tfn" || q.type === "ynn" || q.type === "gap") {
+                  if (Array.isArray(q.data)) end = start + q.data.length - 1;
+                } else if (q.type === "matching-information") {
+                  const data = q.data[0];
+                  end = start + data.question.length - 1;
+                } else if (q.type === "matching-words") {
+                  const data = q.data[0];
+                  end = start + data.questions.length - 1;
+                }
+
+                container.innerHTML += `<p><b>Question ${start}${end > start ? `-${end}` : ""}</b></p>`;
+                container.innerHTML += `<p>${q.instructions}</p>`;
+
+                if (q.type === "mcq" || q.type === "tfn" || q.type === "ynn") {
+                  // Dạng mới: q.data là mảng các câu hỏi
+                  if (Array.isArray(q.data)) {
+                    q.data.forEach((item, dataIdx) => {
+                      container.innerHTML += `
+                        <div id="question-${questionIndex}">
+                          <p><strong>${questionIndex}.</strong> ${item.question} <button class = "mark" id = "mark-${questionIndex}" onclick = "save(${questionIndex})"></button></p>
+                          ${item.options.map(
+                            opt => `
+                              <div class="options" style = "margin: 5px">
+                                <label><input type="radio" name="q${questionIndex}" value="${opt}"> ${opt}</label><br>
+                              </div>
+                            `
+                          ).join('')}
+                        </div>
+                      `;
+                      questionIndex++;
+                    });
+                  }
+                } else if (q.type === "matching-information") {
+                  const data = q.data[0];
+                  container.innerHTML += `
+                    <style>
+                      table {
+                        border: solid 1px;
+                        width: 100%;
+                      }
+                      #tr1 {
+                        background-color: #469FFF;
+                      }
+                      th {
+                        width: 100px;
+                      }
+                    </style>
+                    <table>
+                      <tr id="tr1">
+                        <th style = "width: 500px"> Questions </th>
+                        ${data.options.map(
+                          opt => `<th> ${opt} </th>`
                         ).join('')}
+                      </tr>
+                      ${data.question.map(
+                        (opt, rowi) => `
+                          <tr id="question-${questionIndex}">
+                            <th style="text-align: left">${questionIndex}. ${opt} <button class = "mark" id = "mark-${questionIndex}" onclick = "save(${questionIndex})"></button></th>
+                            ${data.options.map(
+                              opt2 => `
+                                <th>
+                                  <label><input type="radio" name="q${i}_${rowi}" value="${opt2}"></label><br>
+                                </th>
+                              `
+                            ).join('')}
+                          </tr>
+                          ${(() => { questionIndex++; return '' })()}
+                        `
+                      ).join('')}
+                    </table>
+                  `;
+                } else if (q.type === "gap") {
+                  q.data.forEach(item => {
+                    container.innerHTML += `
+                      <div id="question-${questionIndex}" class="gap-question">
+                        <p style="margin: 7px, line-height: 1.8">
+                          ${item.prefix ?? ""}
+                          <strong>${questionIndex}.</strong> <input type="text" name="q${questionIndex}" style="width: 150px; padding: 5px;"> <button class = "mark" id = "mark-${questionIndex}" onclick = "save(${questionIndex})"></button>
+                          ${item.suffix ?? ""} 
+                        </p>
                       </div>
                     `;
                     questionIndex++;
                   });
-                }
-              } else if (q.type === "matching-information") {
-                const data = q.data[0];
-                container.innerHTML += `
-                  <style>
-                    table {
-                      border: solid 1px;
-                      width: 100%;
-                    }
-                    #tr1 {
-                      background-color: #469FFF;
-                    }
-                    th {
-                      width: 100px;
-                    }
-                  </style>
-                  <table>
-                    <tr id="tr1">
-                      <th style = "width: 500px"> Questions </th>
-                      ${data.options.map(
-                        opt => `<th> ${opt} </th>`
-                      ).join('')}
-                    </tr>
-                    ${data.question.map(
-                      (opt, rowi) => `
-                        <tr id="question-${questionIndex}">
-                          <th style="text-align: left">${questionIndex}. ${opt} </th>
-                          ${data.options.map(
-                            opt2 => `
-                              <th>
-                                <label><input type="radio" name="q${i}_${rowi}" value="${opt2}"></label><br>
-                              </th>
-                            `
-                          ).join('')}
-                        </tr>
-                        ${(() => { questionIndex++; return '' })()}
-                      `
-                    ).join('')}
-                  </table>
-                `;
-              } else if (q.type === "gap") {
-                q.data.forEach(item => {
-                  container.innerHTML += `
-                    <div id="question-${questionIndex}" class="gap-question">
-                      <p style="margin: 7px, line-height: 1.8">
-                        ${item.prefix ?? ""}
-                        <strong>${questionIndex}.</strong> <input type="text" name="q${questionIndex}" style="width: 200px; padding: 5px;">
-                        ${item.suffix ?? ""}
-                      </p>
-                    </div>
-                  `;
-                  questionIndex++;
-                });
-              }
-            });
-            loadAnswers(); // Gọi hàm loadAnswers sau khi đã thêm nội dung vào container
-          }
+                } else if (q.type === "matching-words") {
+                  let html = 
+                    `<style>
+                      #option-area {
+                        width: 100%;
+                        min-height: 100px;
+                      }
 
-          function saveAnswers() {
+                      .options {
+                        background: #ccc;
+                        display: inline-block;
+                        width: fit-content;
+                        margin-bottom: 10px;
+                        padding: 5px;
+                        border-radius: 5px;
+                      }
+
+                      .blank-area {
+                        display: inline-block;
+                        min-width: 100px;
+                        min-height: 23px;
+                        border: 1px dashed black;
+                        margin: 0;
+                        padding: 0;
+                        // opacity: 0.5;
+                      }
+
+                      .blank-area.filled {
+                        border: none;
+                        display: inline-block;
+                        margin: 5px;
+                      }
+
+                      .blank-area .options {
+                        background: #ccc;
+                        border-radius: 5px
+                        padding: 0;
+                        margin: 0;
+                      }
+                    </style>
+                    <div id = "option-area">`;
+
+                    q.data[0].options.forEach(opt => {
+                      html += `
+                        <div class = "options" draggable = "true"> ${opt}</div>
+                      `
+                    })
+                    html += `</div>
+                    <p>
+                    `;
+
+                    q.data[0].questions.forEach(opt => {
+                      html += `
+                        ${opt.prefix ?? ""}
+                        <div class = "blank-area"></div>
+                        ${opt.suffix ?? ""}
+                      `
+                    })
+
+                    html += `</p>`
+
+                    container.innerHTML += html;
+
+                    setTimeout(() => {
+                      let lists = document.getElementsByClassName("options");
+                      let options = document.getElementById("option-area");
+                      let blank = document.querySelectorAll(".blank-area");
+                      let selected = null;
+
+                      console.log(typeof blank)
+
+                      for (let option of lists) {
+                        option.addEventListener("dragstart", function(e) {
+                          selected = e.target;
+                          console.log(selected);
+                        })
+
+                        blank.forEach(opt => {
+                            opt.addEventListener("dragover", function(e) {
+                              e.preventDefault();
+                            })
+
+                            opt.addEventListener("drop", function(e) {
+                              if (opt.children.length === 0) {
+                                opt.innerHTML = "";
+                                opt.appendChild(selected);
+                                opt.classList.add("filled");
+                                selected = null;  
+                              }
+                            })
+                          })
+
+                        options.addEventListener("dragover", function(e) {
+                              e.preventDefault();
+                            })
+
+                        options.addEventListener("drop", function(e) {
+                          if (selected) {
+                            let parent = selected.parentElement;
+                            if (parent.classList.contains("blank-area")) {
+                              parent.classList.remove("filled");
+                            }
+
+                            options.appendChild(selected);
+                            selected = null;
+                          }
+                        })
+                      }
+                    }, 0);
+                }
+                container.innerHTML += `<br>`;
+              });
+              loadAnswers(); // Gọi hàm loadAnswers sau khi đã thêm nội dung vào container
+              for (let i = 1; i <= 40; i++) {
+                const markButton = document.getElementById(`mark-${i}`);
+                const quesButton = document.getElementById(`but-${i}`);
+                const isMarked = localStorage.getItem(`mark_${i}`) === "1";
+                if (markButton && quesButton && isMarked) {
+                  quesButton.classList.add("activate1");
+                  markButton.classList.add("activate2");
+                }
+              }
+            }
+
+            function saveAnswers() {
+              if (!currentTest) return;
+              const passageIndex = parseInt(localStorage.getItem("passageIndex") || "0", 10);
+              const questions = currentTest.reading[passageIndex].questions;
+              let questionIndex = (passageIndex === 0 ? 1 : (passageIndex === 1 ? 14 : 27));
+
+              questions.forEach((q, i) => {
+                if (q.type === "mcq" || q.type === "tfn" || q.type === "ynn") {
+                  if (Array.isArray(q.data)) {
+                    q.data.forEach(() => {
+                      const selectedOption = document.querySelector(`input[name="q${questionIndex}"]:checked`);
+                      if (selectedOption) {
+                        localStorage.setItem(`answer_q${questionIndex}`, selectedOption.value);
+                      }
+                      questionIndex++;
+                    });
+                  }
+                } else if (q.type === "matching-information") {
+                  const data = q.data[0];
+                  data.question.forEach((_, rowi) => {
+                    const selectedOption = document.querySelector(`input[name="q${i}_${rowi}"]:checked`);
+                    if (selectedOption) {
+                      localStorage.setItem(`answer_p${passageIndex+1}_q${i}_${rowi}`, selectedOption.value);
+                    }
+                  });
+                  questionIndex += data.question.length;
+                } else if (q.type === "gap") {
+                  q.data.forEach(() => {
+                    const input = document.querySelector(`input[name="q${questionIndex}"]`);
+                    if (input) {
+                      localStorage.setItem(`answer_q${questionIndex}`, input.value);
+                    }
+                    questionIndex++;
+                  });
+                } else if (q.type === "matching-words") {
+                  const blanks = document.querySelectorAll(".blank-area");
+                  blanks.forEach((blank, idx) => {
+                    const child = blank.querySelector(".options");
+                    if (child) {
+                      localStorage.setItem(`answer_p${passageIndex}_q${questionIndex + idx}`, child.textContent.trim());
+                    } else {
+                      localStorage.removeItem(`answer_p${passageIndex}_q${questionIndex + idx}`);
+                    }
+                  });
+                  questionIndex += q.data[0].questions.length;
+                }
+              });
+            }
+
+          function loadAnswers() {
             if (!currentTest) return;
             const passageIndex = parseInt(localStorage.getItem("passageIndex") || "0", 10);
             const questions = currentTest.reading[passageIndex].questions;
@@ -249,9 +451,11 @@
               if (q.type === "mcq" || q.type === "tfn" || q.type === "ynn") {
                 if (Array.isArray(q.data)) {
                   q.data.forEach(() => {
-                    const selectedOption = document.querySelector(`input[name="q${questionIndex}"]:checked`);
-                    if (selectedOption) {
-                      localStorage.setItem(`answer_q${questionIndex}`, selectedOption.value);
+                    const questionName = 'q' + questionIndex;
+                    const savedAnswer = localStorage.getItem('answer_' + questionName);
+                    if (savedAnswer) {
+                      const radioToCheck = document.querySelector(`input[name="${questionName}"][value="${savedAnswer}"]`);
+                      if (radioToCheck) radioToCheck.checked = true;
                     }
                     questionIndex++;
                   });
@@ -259,185 +463,508 @@
               } else if (q.type === "matching-information") {
                 const data = q.data[0];
                 data.question.forEach((_, rowi) => {
-                  const selectedOption = document.querySelector(`input[name="q${i}_${rowi}"]:checked`);
-                  if (selectedOption) {
-                    localStorage.setItem(`answer_q${i}_${rowi}`, selectedOption.value);
-                  }
-                });
-                questionIndex += data.question.length;
-              } else if (q.type === "gap") {
-                q.data.forEach(() => {
-                  const input = document.querySelector(`input[name="q${questionIndex}"]`);
-                  if (input) {
-                    localStorage.setItem(`answer_q${questionIndex}`, input.value);
-                  }
-                  questionIndex++;
-                });
-              }
-            });
-          }
-
-        function loadAnswers() {
-          if (!currentTest) return;
-          const passageIndex = parseInt(localStorage.getItem("passageIndex") || "0", 10);
-          const questions = currentTest.reading[passageIndex].questions;
-          let questionIndex = (passageIndex === 0 ? 1 : (passageIndex === 1 ? 14 : 27));
-
-          questions.forEach((q, i) => {
-            if (q.type === "mcq" || q.type === "tfn" || q.type === "ynn") {
-              if (Array.isArray(q.data)) {
-                q.data.forEach(() => {
-                  const questionName = 'q' + questionIndex;
-                  const savedAnswer = localStorage.getItem('answer_' + questionName);
+                  const questionName = `q${i}_${rowi}`;
+                  const savedAnswer = localStorage.getItem(`answer_p${passageIndex+1}_q${i}_${rowi}`);
                   if (savedAnswer) {
                     const radioToCheck = document.querySelector(`input[name="${questionName}"][value="${savedAnswer}"]`);
                     if (radioToCheck) radioToCheck.checked = true;
                   }
-                  questionIndex++;
                 });
-              }
-            } else if (q.type === "matching-information") {
-              const data = q.data[0];
-              data.question.forEach((_, rowi) => {
-                const questionName = `q${i}_${rowi}`;
-                const savedAnswer = localStorage.getItem('answer_' + questionName);
-                if (savedAnswer) {
-                  const radioToCheck = document.querySelector(`input[name="${questionName}"][value="${savedAnswer}"]`);
-                  if (radioToCheck) radioToCheck.checked = true;
-                }
-              });
-              questionIndex += data.question.length;
-            } else if (q.type === "gap") {
-              q.data.forEach(() => {
-                const questionName = 'q' + questionIndex;
-                const savedAnswer = localStorage.getItem('answer_' + questionName);
-                if (savedAnswer !== null) {
-                  const input = document.querySelector(`input[name="${questionName}"]`);
-                  if (input) input.value = savedAnswer;
-                }
-                questionIndex++;
-              });
-            }
-          });
-        }
-
-        function scrollToQuestion(qNum) {
-          const questionEl = document.getElementById(`question-${qNum}`);
-          if (questionEl) {
-            questionEl.scrollIntoView({ behavior: "smooth", block: "start" });
-          }
-        }
-
-        function selectPassage(index) {
-          saveAnswers();
-          
-          localStorage.setItem("passageIndex", index); // lưu trạng thái người dùng vào local storage
-          loadread(file, index);
-          loadTest(file, index);
-          displayname(file, index);
-          
-        }
-
-        function submitAnswers() {
-          if (!currentTest) return;
-
-          let correct = 0;
-          let total = 0;
-
-          for (let ind = 0; ind < currentTest.reading.length; ind++) {
-            let questionIndex = (ind === 0 ? 1 : (ind === 1 ? 14 : 27));
-            currentTest.reading[ind].questions.forEach((q, i) => {
-              if (q.type === "mcq" || q.type === "tfn" || q.type === "ynn") {
-                if (Array.isArray(q.data)) {
-                  q.data.forEach((item) => {
-                    const selected = document.querySelector(`input[name="q${questionIndex}"]:checked`);
-                    if (selected && selected.value.trim().toLowerCase() === item.answer.trim().toLowerCase()) correct++;
-                    total += 1;
-                    questionIndex++;
-                  });
-                }
-              } else if (q.type === "matching-information") {
-                const data = q.data[0];
-                data.question.forEach((_, rowIndex) => {
-                  const selected = document.querySelector(`input[name="q${i}_${rowIndex}"]:checked`);
-                  const answer = selected ? selected.value : null;
-                  if (answer && answer.trim().toLowerCase() === data.answer[rowIndex].trim().toLowerCase()) correct++;
-                });
-                total += data.question.length;
                 questionIndex += data.question.length;
               } else if (q.type === "gap") {
-                q.data.forEach((item) => {
-                  const input = document.querySelector(`input[name="q${questionIndex}"]`);
-                  if (input && input.value.trim().toLowerCase() === item.answer.trim().toLowerCase()) {
-                    correct++;
+                q.data.forEach(() => {
+                  const questionName = 'q' + questionIndex;
+                  const savedAnswer = localStorage.getItem('answer_' + questionName);
+                  if (savedAnswer !== null) {
+                    const input = document.querySelector(`input[name="${questionName}"]`);
+                    if (input) input.value = savedAnswer;
                   }
-                  total += 1;
                   questionIndex++;
                 });
+              } else if (q.type === "matching-words") {
+                const blanks = document.querySelectorAll(".blank-area");
+                blanks.forEach((blank, idx) => {
+                  const saved = localStorage.getItem(`answer_p${passageIndex}_q${questionIndex + idx}`);
+                  if (saved) {
+                    // Tìm option có text này trong #option-area
+                    const optionArea = document.getElementById("option-area");
+                    const option = Array.from(optionArea.querySelectorAll(".options"))
+                                        .find(opt => opt.textContent.trim() === saved);
+                    if (option) {
+                      blank.appendChild(option);
+                      blank.classList.add("filled");
+                    }
+                  }
+                });
+                questionIndex += q.data[0].questions.length;
               }
+
             });
           }
 
-          window.location.href = `result.html?score=${correct}&total=${total}`;
-        }
-
-        document.addEventListener("DOMContentLoaded", () => {
-          // Tạo nút câu hỏi cho từng ques div nếu chưa có
-          const container0 = document.getElementById("ques-0");
-          const container1 = document.getElementById("ques-1");
-          const container2 = document.getElementById("ques-2");
-
-          if (container0 && container0.innerHTML.trim() === "") {
-            for (let i = 1; i <= 13; i++) {
-              container0.innerHTML += `<button onclick = "scrollToQuestion(${i})">${i}</button>`;
+          function scrollToQuestion(qNum) {
+            const questionEl = document.getElementById(`question-${qNum}`);
+            if (questionEl) {
+              questionEl.scrollIntoView({ behavior: "smooth", block: "start" });
             }
           }
 
-          if (container1 && container1.innerHTML.trim() === "") {
-            for (let i = 14; i <= 26; i++) {
-              container1.innerHTML += `<button onclick = "scrollToQuestion(${i})">${i}</button>`;
-            }
+          async function selectPassage(index) {
+            saveAnswers();
+            localStorage.setItem("passageIndex", index);
+            await loadread(file, index);
+            await loadTest(file, index);
+            await displayname(file, index);
+            try { restoreNotesOnPage(index); } catch (e) {}
+            try { restoreHighlightsOnPage(index); } catch (e) {}
           }
 
-          if (container2 && container2.innerHTML.trim() === "") {
-            for (let i = 27; i <= 40; i++) {
-              container2.innerHTML += `<button onclick = "scrollToQuestion(${i})">${i}</button>`;
+          function submitAnswers() {
+            if (!currentTest) return;
+
+            let correct = 0;
+            let total = 0;
+
+            try { saveAnswers(); } catch (e) {}
+
+            for (let ind = 0; ind < currentTest.reading.length; ind++) {
+              let questionIndex = (ind === 0 ? 1 : (ind === 1 ? 14 : 27));
+              currentTest.reading[ind].questions.forEach((q, i) => {
+                if (q.type === "mcq" || q.type === "tfn" || q.type === "ynn") {
+                  if (Array.isArray(q.data)) {
+                    q.data.forEach((item) => {
+                      const saved = localStorage.getItem(`answer_q${questionIndex}`);
+                      const selected = saved ? null : document.querySelector(`input[name="q${questionIndex}"]:checked`);
+                      const userVal = saved ? saved : (selected ? selected.value : null);
+                      if (userVal && userVal.trim().toLowerCase() === item.answer.trim().toLowerCase()) correct++;
+                      total += 1;
+                      questionIndex++;
+                    });
+                  }
+                } else if (q.type === "matching-information") {
+                  const data = q.data[0];
+                  data.question.forEach((_, rowIndex) => {
+                    const saved = localStorage.getItem(`answer_p${ind+1}_q${i}_${rowIndex}`) ||
+                                   localStorage.getItem(`answer_p${ind}_q${i}_${rowIndex}`);
+                    const selected = saved ? null : document.querySelector(`input[name="q${i}_${rowIndex}"]:checked`);
+                    const answer = saved ? saved : (selected ? selected.value : null);
+                    if (answer && answer.trim().toLowerCase() === data.answer[rowIndex].trim().toLowerCase()) correct++;
+                  });
+                  total += data.question.length;
+                  questionIndex += data.question.length;
+                } else if (q.type === "gap") {
+                  q.data.forEach((item) => {
+                    const saved = localStorage.getItem(`answer_q${questionIndex}`);
+                    const input = saved ? null : document.querySelector(`input[name="q${questionIndex}"]`);
+                    const userVal = saved ? saved : (input ? input.value : null);
+                    if (userVal && userVal.trim().toLowerCase() === item.answer.trim().toLowerCase()) {
+                      correct++;
+                    }
+                    total += 1;
+                    questionIndex++;
+                  });
+                } else if (q.type === "matching-words") {
+                  const data = q.data[0];
+                  const numQuestions = Array.isArray(data.questions) ? data.questions.length : 0;
+                  const expectedAnswers = Array.isArray(data.questions)
+                    ? data.questions.map(item => (item.answer ?? "").toString().trim())
+                    : [];
+
+                  const extractLetter = (s) => {
+                    if (!s) return null;
+                    const m = s.match(/^\s*([A-J])\./i);
+                    return m ? m[1].toUpperCase() : null;
+                  };
+
+                  for (let rowIndex = 0; rowIndex < numQuestions; rowIndex++) {
+                    const saved = localStorage.getItem(`answer_p${ind}_q${questionIndex + rowIndex}`) ||
+                                   localStorage.getItem(`answer_p${ind+1}_q${questionIndex + rowIndex}`);
+                    const expected = expectedAnswers[rowIndex] || null;
+
+                    const userLetter = extractLetter(saved);
+                    const expectedLetter = extractLetter(expected);
+
+                    let isCorrect = false;
+                    if (userLetter && expectedLetter) {
+                      isCorrect = userLetter === expectedLetter;
+                    } else if (saved && expected) {
+                      isCorrect = saved.trim().toLowerCase() === expected.trim().toLowerCase();
+                    }
+
+                    if (isCorrect) correct++;
+                  }
+                  total += numQuestions;
+                  questionIndex += numQuestions;
+                }
+              });
             }
+
+            window.location.href = `result.html?score=${correct}&total=${total}`;
           }
-        });
 
-        // Gọi hàm load khi trang mở
-        // if (file) loadTest(file);
-        // else document.getElementById('testContent').textContent = 'No question found!';
+          document.addEventListener("DOMContentLoaded", () => {
+            const container0 = document.getElementById("ques-0");
+            const container1 = document.getElementById("ques-1");
+            const container2 = document.getElementById("ques-2");
 
-        const savedIndex = parseInt(localStorage.getItem("passageIndex") || "0", 10);
-        if (file) selectPassage(0);
-        else document.getElementById('testContent').textContent = 'No question found!';
-      </script>
+            if (container0 && container0.innerHTML.trim() === "") {
+              for (let i = 1; i <= 13; i++) {
+                container0.innerHTML += `<button class="jump-question" data-part="0" data-q="${i}" id="but-${i}">${i}</button>`;
+              }
+            }
+
+            if (container1 && container1.innerHTML.trim() === "") {
+              for (let i = 14; i <= 26; i++) {
+                container1.innerHTML += `<button class="jump-question" data-part="1" data-q="${i}" id="but-${i}">${i}</button>`;
+              }
+            }
+
+            if (container2 && container2.innerHTML.trim() === "") {
+              for (let i = 27; i <= 40; i++) {
+                container2.innerHTML += `<button class="jump-question" data-part="2" data-q="${i}" id="but-${i}">${i}</button>`;
+              }
+            }
+
+            document.querySelectorAll('.jump-question').forEach(btn => {
+              btn.addEventListener('click', function() {
+                const part = parseInt(this.getAttribute('data-part'), 10);
+                const qNum = parseInt(this.getAttribute('data-q'), 10);
+                const currentPart = parseInt(localStorage.getItem("passageIndex") || "0", 10);
+
+                if (part !== currentPart) {
+                  selectPassage(part);
+                  setTimeout(() => scrollToQuestion(qNum), 400);
+                } else {
+                  scrollToQuestion(qNum);
+                }
+              });
+            });
+          });
+
+          // Gọi hàm load khi trang mở
+          // if (file) loadTest(file);
+          // else document.getElementById('testContent').textContent = 'No question found!';
+
+          const savedIndex = parseInt(localStorage.getItem("passageIndex") || "0", 10);
+          if (file) selectPassage(0);
+          else document.getElementById('testContent').textContent = 'No question found!';
+        </script>
+        </div>
+      </div>
+    </div>
+
+    <div id="note-area">
+      <div id="note-list"></div>
+      <textarea id="note-text" placeholder="Take your notes here..."></textarea>
+      <div class="note-actions">
+        <button id="note-save">Save</button>
+        <button id="note-delete-current">Delete</button>
+        <button onclick="closenote()">Close</button>
       </div>
     </div>
   </div>
 
+  <script>
+      const noteArea = document.getElementById("note-area");
+      const note = document.getElementById("note-function");
+      const highlight = document.getElementById("highlight-function");
+      const contextMenu = document.querySelector(".context");
+      const noteText = document.getElementById("note-text");
+      const noteList = document.getElementById("note-list");
+      const noteSaveBtn = document.getElementById("note-save");
+      let activeNoteId = null;
+      let lastSelectionRange = null;
+
+      const NOTES_KEY = "notes_v1";
+      const HIGHLIGHTS_KEY = "highlights_v1";
+      const getNotes = () => {
+        try { return JSON.parse(localStorage.getItem(NOTES_KEY) || "[]"); } catch { return []; }
+      };
+      const setNotes = (notes) => {
+        try { localStorage.setItem(NOTES_KEY, JSON.stringify(notes)); } catch (e) {}
+      };
+      const getHighlights = () => {
+        try { return JSON.parse(localStorage.getItem(HIGHLIGHTS_KEY) || "[]"); } catch { return []; }
+      };
+      const setHighlights = (arr) => {
+        try { localStorage.setItem(HIGHLIGHTS_KEY, JSON.stringify(arr)); } catch (e) {}
+      };
+      const genId = () => 'n' + Date.now() + Math.floor(Math.random()*1000);
+
+      function renderNoteList() {
+        const notes = getNotes();
+        noteList.innerHTML = notes.length ? '' : '<div class="note-empty">No notes</div>';
+        notes.forEach(n => {
+          const item = document.createElement('div');
+          item.className = 'note-item';
+          item.dataset.id = n.id;
+          item.innerHTML = `<div class="note-anchor-text">${n.anchorText}</div><div class="note-snippet">${(n.content||'').slice(0,80)}</div>`;
+          item.addEventListener('click', () => focusNote(n.id));
+          noteList.appendChild(item);
+        });
+      }
+
+      function focusNote(noteId) {
+        const notes = getNotes();
+        const note = notes.find(x => x.id === noteId);
+        if (!note) return;
+        activeNoteId = noteId;
+        noteText.value = note.content || '';
+
+        const currentIndex = parseInt(localStorage.getItem("passageIndex") || '0', 10);
+        const go = () => {
+          const anchor = document.querySelector(`[data-note-id="${noteId}"]`);
+          if (anchor) {
+            anchor.scrollIntoView({behavior:'smooth', block:'center'});
+            anchor.classList.add('note-anchor-pulse');
+            setTimeout(()=>anchor.classList.remove('note-anchor-pulse'), 1000);
+          }
+        };
+        if (currentIndex !== note.passageIndex) {
+          selectPassage(note.passageIndex);
+          setTimeout(go, 600);
+        } else {
+          go();
+        }
+      }
+
+      function wrapSelectionWithSpan(className, data) {
+        const sel = window.getSelection();
+        if (lastSelectionRange) {
+          try { sel.removeAllRanges(); sel.addRange(lastSelectionRange); } catch (e) {}
+        }
+        if (!sel || sel.isCollapsed) return null;
+        const range = sel.getRangeAt(0);
+        const span = document.createElement('span');
+        span.className = className;
+        if (data) {
+          Object.entries(data).forEach(([k,v]) => span.setAttribute(k, String(v)));
+        }
+        const frag = range.extractContents();
+        span.appendChild(frag);
+        range.insertNode(span);
+        sel.removeAllRanges();
+        lastSelectionRange = null;
+        return span;
+      }
+
+      function currentSelectionContainer() {
+        const sel = window.getSelection();
+        const node = lastSelectionRange ? lastSelectionRange.commonAncestorContainer : (sel && !sel.isCollapsed ? sel.getRangeAt(0).commonAncestorContainer : null);
+        if (!node) return null;
+        const reading = document.getElementById('reading');
+        const questions = document.querySelector('.questions');
+        if (reading && reading.contains(node)) return 'reading';
+        if (questions && questions.contains(node)) return 'testContent';
+        return null;
+      }
+
+      function createNoteFromSelection() {
+        const containerId = currentSelectionContainer();
+        if (!containerId) return;
+        const id = genId();
+        const span = wrapSelectionWithSpan('note-anchor', { 'data-note-id': id });
+        if (!span) return;
+        const anchorText = span.textContent || '';
+        const passageIndex = parseInt(localStorage.getItem('passageIndex') || '0', 10);
+        const notes = getNotes();
+        const note = { id, passageIndex, containerId, anchorText, content: '' };
+        notes.push(note);
+        setNotes(notes);
+        renderNoteList();
+        activeNoteId = id;
+        noteText.value = '';
+      }
+
+      function restoreNotesOnPage(passageIndex) {
+        const notes = getNotes().filter(n => n.passageIndex === passageIndex);
+        notes.forEach(n => {
+          if (document.querySelector(`[data-note-id="${n.id}"]`)) return;
+          const container = document.getElementById(n.containerId === 'reading' ? 'reading' : 'testContent');
+          if (!container) return;
+          wrapFirstOccurrence(container, n.anchorText, n.id);
+        });
+      }
+
+      function wrapFirstOccurrence(container, text, noteId) {
+        if (!text) return;
+        const walker = document.createTreeWalker(container, NodeFilter.SHOW_TEXT, null);
+        let node;
+        const lower = text.trim().toLowerCase();
+        while ((node = walker.nextNode())) {
+          const idx = node.nodeValue.toLowerCase().indexOf(lower);
+          if (idx !== -1) {
+            const range = document.createRange();
+            range.setStart(node, idx);
+            range.setEnd(node, idx + text.length);
+            const span = document.createElement('span');
+            span.className = 'note-anchor';
+            span.setAttribute('data-note-id', noteId);
+            range.surroundContents(span);
+            break;
+          }
+        }
+      }
+
+      function wrapHighlightOccurrence(container, text) {
+        if (!text) return;
+        const walker = document.createTreeWalker(container, NodeFilter.SHOW_TEXT, null);
+        let node;
+        const lower = text.trim().toLowerCase();
+        while ((node = walker.nextNode())) {
+          const idx = node.nodeValue.toLowerCase().indexOf(lower);
+          if (idx !== -1) {
+            const range = document.createRange();
+            range.setStart(node, idx);
+            range.setEnd(node, idx + text.length);
+            const span = document.createElement('span');
+            span.className = 'highlight';
+            range.surroundContents(span);
+            break;
+          }
+        }
+      }
+      const updatePosition = (x, y) => {
+        const maxTopValue = window.innerHeight - contextMenu.offsetHeight;
+        const maxLeftValue = window.innerWidth - contextMenu.offsetWidth;
+
+        contextMenu.style.left = `${Math.min(maxLeftValue, x)}px`;
+        contextMenu.style.top = `${Math.min(maxTopValue, y)}px`;
+      };
+
+      document.addEventListener("contextmenu", (ev) => {
+        ev.preventDefault();
+        const sel = window.getSelection();
+        if (sel && !sel.isCollapsed) {
+          try { lastSelectionRange = sel.getRangeAt(0).cloneRange(); } catch (e) { lastSelectionRange = null; }
+        } else {
+          lastSelectionRange = null;
+        }
+        updatePosition(ev.clientX, ev.clientY);
+        contextMenu.style.visibility = "visible";
+      });
+
+      document.addEventListener("click", () => {
+        contextMenu.style.visibility = null;
+      });
+
+      note.addEventListener("click", function() {
+        noteArea.style.display = "flex";
+        renderNoteList();
+        createNoteFromSelection();
+        contextMenu.style.visibility = null;
+      })
+
+      if (noteSaveBtn) {
+        noteSaveBtn.addEventListener('click', function() {
+          if (!activeNoteId) return;
+          const notes = getNotes();
+          const idx = notes.findIndex(n => n.id === activeNoteId);
+          if (idx !== -1) {
+            notes[idx].content = noteText.value || '';
+            setNotes(notes);
+            renderNoteList();
+            noteText.value = '';
+          }
+        });
+      }
+
+      // delete current active note
+      const noteDeleteBtn = document.getElementById('note-delete-current');
+      if (noteDeleteBtn) {
+        noteDeleteBtn.addEventListener('click', function() {
+          if (!activeNoteId) return;
+          const remaining = getNotes().filter(n => n.id !== activeNoteId);
+          setNotes(remaining);
+          // remove anchor spans from DOM
+          document.querySelectorAll(`[data-note-id="${activeNoteId}"]`).forEach(el => {
+            const parent = el.parentNode;
+            while (el.firstChild) parent.insertBefore(el.firstChild, el);
+            parent.removeChild(el);
+          });
+          activeNoteId = null;
+          noteText.value = '';
+          renderNoteList();
+        });
+      }
+
+      function highlightSelection() {
+        const sel = window.getSelection();
+        if (lastSelectionRange) {
+          try { sel.removeAllRanges(); sel.addRange(lastSelectionRange); } catch (e) {}
+        }
+        if (!sel || sel.isCollapsed) return;
+        const range = sel.getRangeAt(0);
+        const reading = document.getElementById("reading");
+        const questions = document.querySelector('.questions');
+        const inReading = reading && reading.contains(range.commonAncestorContainer);
+        const inQuestions = questions && questions.contains(range.commonAncestorContainer);
+        if (!inReading && !inQuestions) return;
+        const span = document.createElement("span");
+        span.className = "highlight";
+        const frag = range.extractContents();
+        span.appendChild(frag);
+        range.insertNode(span);
+        try {
+          const containerId = inReading ? 'reading' : 'testContent';
+          const passageIndex = parseInt(localStorage.getItem('passageIndex') || '0', 10);
+          const text = span.textContent || '';
+          const list = getHighlights();
+          list.push({ id: genId(), passageIndex, containerId, text });
+          setHighlights(list);
+        } catch (e) {}
+        sel.removeAllRanges();
+        lastSelectionRange = null;
+      }
+
+      highlight.addEventListener("click", function() {
+        highlightSelection();
+        contextMenu.style.visibility = null;
+      });
+
+      function restoreHighlightsOnPage(passageIndex) {
+        const highs = getHighlights().filter(h => h.passageIndex === passageIndex);
+        highs.forEach(h => {
+          const container = document.getElementById(h.containerId === 'reading' ? 'reading' : 'testContent');
+          if (!container) return;
+          wrapHighlightOccurrence(container, h.text);
+        });
+      }
+
+      
+      window.closenote = function() {
+        document.getElementById("note-area").style.display = "none";
+      }
+
+      document.addEventListener('click', function(e) {
+        const anchorEl = e.target.closest('.note-anchor');
+        if (!anchorEl) return;
+        const id = anchorEl.getAttribute('data-note-id');
+        if (!id) return;
+        noteArea.style.display = 'flex';
+        renderNoteList();
+        focusNote(id);
+      });
+  </script>
+
   <div class="pass_display">
-      <div id = "pass">
-          <!-- passage 1 -->
-          <div class="wrapbut">
-            <button onclick="selectPassage(0)" id="p1">Part 1</button>
-            <div id="ques-0"></div>
-
-            <button onclick="selectPassage(1)" id="p2">Part 2</button>
-            <div id="ques-1"></div>
-
-            <button onclick="selectPassage(2)" id="p3">Part 3</button>
-            <div id="ques-2"></div>
-            
-          </div>
+    <div id="pass">
+      <div class="wrapbut">
+        <div class="question-buttons">
+          <button onclick="selectPassage(0)" id="p1">Part 1</button>
+          <div id="ques-0"></div>
+          <button onclick="selectPassage(1)" id="p2">Part 2</button>
+          <div id="ques-1"></div>
+          <button onclick="selectPassage(2)" id="p3">Part 3</button>
+          <div id="ques-2"></div>
+        </div>
+        <button onclick="submitAnswers()" id="submit"><b>Submit</b></button>
       </div>
-    <button onclick="submitAnswers()" id = "submit"><b>Submit</b></button>
+    </div>
   </div>
 
 
-  <div id="fullscreen-modal" style="
+  <!-- <div id="fullscreen-modal" style="
     position:fixed;top:0;left:0;width:100vw;height:100vh;
     background:rgba(0,0,0,0.8);z-index:9999;display:flex;
     align-items:center;justify-content:center;flex-direction:column;
@@ -451,10 +978,23 @@
     <button id="fullscreen-btn" style="font-size:1.5em;padding:15px 40px;cursor:pointer;">
       Mở toàn màn hình
     </button>
-  </div>
+  </div> -->
   <script>
     window.addEventListener('unload', function() {
-      localStorage.clear();
+      try {
+        const keysToRemove = [];
+        for (let i = 0; i < localStorage.length; i++) {
+          const k = localStorage.key(i);
+          if (!k) continue;
+          if (k.startsWith('answer_') || k.startsWith('mark_') || k.startsWith('answer_p')) {
+            keysToRemove.push(k);
+          }
+        }
+        keysToRemove.forEach(k => localStorage.removeItem(k));
+        localStorage.removeItem('notes_v1');
+        localStorage.removeItem('highlights_v1');
+        localStorage.removeItem('note_content');
+      } catch (e) {}
     });
     document.getElementById('fullscreen-btn').onclick = function() {
       if (document.documentElement.requestFullscreen) {
