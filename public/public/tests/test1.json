@@ -1,6 +1,4 @@
 {
-  "title": "Passage 1",
-
   "reading": [
     {
       "type": "pass1",
@@ -29,8 +27,8 @@
           "subheading": "Chinese silk",
           "data": [
             {
-              "prefix": "<b>Early Uses</b><br><b>Clothing</b><p>- at first, silk only available to Chinese of high rank</p>- emperor wore ",
-              "suffix": "silk indoors<br><b>In industry</b>",
+              "prefix": "<b>Early Uses</b><p><b>Clothing</b></p><p>- at first, silk only available to Chinese of high rank</p>- emperor wore ",
+              "suffix": "silk indoors<p><b>In industry</b></p>",
               "answer": "white"
             },
             {
@@ -54,7 +52,7 @@
               "answer": "foreign"
             },
             {
-              "prefix": "<p><b>Evidence of silk trade</b></p>1070 BC, Egypt:<br>- hair of a",
+              "prefix": "<p><b>Evidence of silk trade</b></p><p>1070 BC, Egypt:</p>- hair of a",
               "suffix": "contained silk<br><p><b>2nd century BC, Persia and Mesopotamia:</b></p>- gifts of silk were presented by Chinese ambassadors<p><b>1015 AD, north-west China:</b></p>",
               "answer": "mummy"
             },
@@ -241,13 +239,44 @@
             },
             {
               "prefix":" as the semicolon, for example, but remains a ",
-              "suffix":"",
+              "suffix":" of the latter due to its ability to discipline areas of text that are crowded with commas.",
               "answer":"North America"
-            },
+            }
+          ]
+        },
+        {
+          "type":"matching-words",
+          "instructions":"Complete the summary using the list of words, A-J, below.",
+          "data": [
             {
-              "prefix":"  of the latter due to its ability to discipline areas of text that are crowded with commas.",
-              "suffix":"",
-              "answer":"North America"
+              "options": [
+                "A. popular",
+                "B. artistic",
+                "C. completed",
+                "D. eight",
+                "E. tuition",
+                "F. encouragement",
+                "G. four",
+                "H. practice",
+                "I. two"
+              ],
+              "questions": [
+                {
+                  "prefix":"<p><b>Mozart</b></p>The case of Mozart could be quoted as evidence against the 10,000-hour-practice theory. However, the writer points out that the young Mozart received a lot of",
+                  "suffix":"from his father, and that the symphony he wrote at the age of ",
+                  "answer":"I. two"
+                },
+                {
+                  "prefix":"",
+                  "suffix":" was not",
+                  "answer":"B. artistic"
+                },
+                {
+                  "prefix":"",
+                  "suffix":" and may be of only academic interest. The case, therefore, supports the view that expertise is not solely the result of inherited characteristics.",
+                  "answer":"C. completed"
+                }
+              ]
             }
           ]
         }
